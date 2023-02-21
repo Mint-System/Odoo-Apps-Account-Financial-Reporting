@@ -7,7 +7,7 @@ Collection of account model related modules.
 Clone module into Odoo addon directory.
 
 ```bash
-git clone git@github.com:mint-system/odoo-apps-account-financial-reporting.git ./addons/account_finanical_reporting
+git clone git@github.com:mint-system/odoo-apps-account-financial-reporting.git ./addons/account_financial_reporting
 ```
 
 ## Available modules
