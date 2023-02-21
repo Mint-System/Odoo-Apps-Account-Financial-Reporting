@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_journal_items_report" model="ir.actions.report">
+        <field name="name">Journal Items</field>
+        <field name="model">account.move.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_journal_items_report.account_move_line</field>
+        <field name="report_file">account_journal_items_report.account_move_line</field>
+        <field name="print_report_name">'Journal-Items'</field>
+        <field name="binding_model_id" ref="account.model_account_move_line" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="account_journal_items_report.account_move_line">
+        <t t-call="web.html_container">
+            <t t-call="account_journal_items_report.account_move_line_template" />
+        </t>
+    </template>
+
+    <template id="account_move_line_template">
+        <t t-call="web.external_layout">
+
+            <div class="page">
+
+                <h1>Account Statement</h1>
+
+                <p>From <t t-esc="from_date" t-options="{'widget': 'date'}" /> until <t t-esc="until_date" t-options="{'widget': 'date'}"/></p>
+
+                <t t-foreach="docs_data" t-as="account">
+
+                    <h4><t t-esc="account['code']"/> <t t-esc="account['name']"/></h4>
+                    
+                    <style>
+                        table.o_main_table {
+                            font-size: 0.8rem;
+                        }
+                    </style>
+                    <table class="table table-sm o_main_table" name="journal_items_table">
+                        <thead>
+                            <tr>
+                                <th name="th_date">
+                                    Date
+                                </th>
+                                <th name="th_reference">
+                                    Journal<br/><i>Posting Text</i>
+                                </th>
+                                <th name="th_account">
+                                    Entry<br/><i>Contra Accounts</i>
+                                </th>
+                                <th name="th_debit" class="text-right">
+                                    Debit
+                                </th>
+                                <th name="th_credit" class="text-right">
+                                    Credit
+                                </th>
+                                <th name="th_balance" class="text-right">
+                                    Balance
+                                </th>
+                                <th name="th_cumulated_balance" class="text-right">
+                                    Cumulated<br/>Balance
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="journal_items_table">
+                            <t t-foreach="account['lines']" t-as="line">
+
+                                <tr>
+                                    <td id="date">
+                                        <t t-esc="line['date']" t-options="{'widget': 'date'}" />
+                                    </td>
+                                    <td id="name">
+                                        <t t-esc="line['journal_id'][1]" /><br/>
+                                        <i t-esc="line['name']" />
+                                    </td>
+                                    <td id="entry">
+                                        <t t-esc="line['move_id'][1]" /><br/>
+                                        <i t-esc="line['contra_accounts']" />
+                                    </td>
+                                    <td id="debit" class="text-right">
+                                        <t t-esc="'{0:.2f}'.format(line['debit'])" />
+                                    </td>
+                                    <td id="credit" class="text-right">
+                                        <t t-esc="'{0:.2f}'.format(line['credit'])" />
+                                    </td>
+                                    <td id="balance" class="text-right">
+                                        <t t-esc="line['balance']" t-options="{'widget': 'monetary', 'display_currency': docs.currency_id[:1]}" />
+                                    </td>
+                                    <td id="cumulated_balance" class="text-right">
+                                        <t t-esc="line['cumulated_balance']" t-options="{'widget': 'monetary', 'display_currency': docs.currency_id[:1]}" />
+                                    </td>
+                                </tr>
+
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

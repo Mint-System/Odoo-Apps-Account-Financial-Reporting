@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+model_report_account_journal_items_report_account_move_line_readonly,report.account_journal_items_report.account_move_line,model_report_account_journal_items_report_account_move_line,account.group_account_readonly,1,0,0,0
