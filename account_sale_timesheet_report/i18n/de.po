@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-08 17:15+0000\n"
-"PO-Revision-Date: 2023-03-08 17:15+0000\n"
+"POT-Creation-Date: 2023-03-08 17:49+0000\n"
+"PO-Revision-Date: 2023-03-08 17:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_sale_timesheet_report
+#: model:ir.actions.report,print_report_name:account_sale_timesheet_report.action_timesheet_report
+msgid "'Timesheet Report for %s' % (object.name)"
+msgstr "'Arbeitsrapport für %s' % (object.name)"
 
 #. module: account_sale_timesheet_report
 #: model:ir.actions.report,print_report_name:account_sale_timesheet_report.account_invoices
@@ -67,7 +72,7 @@ msgstr "<span>Projekt</span>"
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_table
 msgid "<span>Responsible / Description</span>"
-msgstr "<span>Verantwortlich / Beschreibung</span>"
+msgstr "<span>Verantworltich / Beschreibung</span>"
 
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_table
@@ -77,18 +82,18 @@ msgstr "<span>Aufgabe</span>"
 #. module: account_sale_timesheet_report
 #: model:ir.actions.report,name:account_sale_timesheet_report.account_invoices
 msgid "Invoices with Timesheet"
-msgstr "Rechnungen mit Arbeitsrapport"
+msgstr "Rechnungen mit Zeitnachweis"
 
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_report
 msgid "Project:"
-msgstr "Projekt:"
+msgstr "Projekt"
 
 #. module: account_sale_timesheet_report
 #: model:ir.actions.report,name:account_sale_timesheet_report.action_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.report_invoice_document
 msgid "Timesheet Report"
-msgstr "Arbeitsrapport"
+msgstr "Zeitnachweis"
 
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_report
