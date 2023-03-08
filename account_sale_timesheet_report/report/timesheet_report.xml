@@ -4,17 +4,21 @@
     <template id="account_sale_timesheet_report.timesheet_table">
         <div class="row" style="margin-top:10px;">
             <div class="col-lg-12">
-                <table class="table table-sm">
+                <style>
+                    table.table-timesheet-entries th {
+                        vertical-align: bottom
+                    }
+                </style>
+                <table class="table table-sm table-timesheet-entries">
                     <thead>
                         <tr>
-                            <th id="date" class="align-middle"><span>Date</span></th>
-                            <th id="partner_id" class="align-middle"><span>Responsible</span></th>
-                            <th id="name" class="align-middle"><span>Description</span></th>
-                            <th id="project_id" class="align-middle" t-if="show_project"><span>Project</span></th>
-                            <th id="task_id" class="align-middle" t-if="show_task"><span>Task</span></th>
-                            <th id="unit_amount" class="align-middle text-right">
-                                <span t-if="is_uom_day">Time Spent (Days)</span>
-                                <span t-else="">Time Spent (Hours)</span>
+                            <th id="date"><span>Date</span></th>
+                            <th id="name"><span>Responsible / Description</span></th>
+                            <th id="project_id" t-if="show_project"><span>Project</span></th>
+                            <th id="task_id" t-if="show_task"><span>Task</span></th>
+                            <th id="unit_amount" class="text-right">
+                                <span t-if="is_uom_day"><span style="white-space: nowrap;">Time Spent</span> (Days)</span>
+                                <span t-else=""><span style="white-space: nowrap;">Time Spent</span> (Hours)</span>
                             </th>
                         </tr>
                    </thead>
@@ -23,11 +27,9 @@
                             <td id="line_date">
                                <span t-field="line.date"/>
                             </td>
-                            <td id="line_partner_id">
-                               <span t-field="line.user_id.partner_id.name"/>
-                               <span t-if="not line.user_id.partner_id.name" t-field="line.employee_id"/>
-                            </td>
-                            <td  id="line_name">
+                            <td id="line_partner_and_name">
+                                <span t-field="line.user_id.partner_id.name"/>
+                                <span t-if="not line.user_id.partner_id.name" t-field="line.employee_id"/>:<br />
                                 <span t-field="line.name" t-options="{'widget': 'text'}"/>
                             </td>
                             <td  id="line_project_id" t-if="show_project">
@@ -70,24 +72,30 @@
                 <t t-set="company" t-value="timesheet_ids.mapped('project_id')[0].company_id if len(timesheet_ids.mapped('project_id')) == 1 else docs.env.company"/>
                 <t t-set="show_task" t-value="bool(timesheet_ids.mapped('task_id'))"/>
                 <t t-set="show_project" t-value="len(timesheet_ids.mapped('project_id')) > 1"/>
+                <t t-set="min_date" t-value="min(timesheet_ids.mapped('date'))"/>
+                <t t-set="max_date" t-value="max(timesheet_ids.mapped('date'))"/>
+
                 <div class="page">
-                    <div class="oe_structure"/>
-                    <div class="row" style="margin-top:10px;">
-                        <div class="col-lg-12">
-                            <h2>
-                                <span>Timesheet Entries
-                                    <t t-if="len(timesheet_ids.mapped('project_id')) == 1">
-                                        for the <t t-esc="timesheet_ids.mapped('project_id')[0].name"/> Project
-                                    </t>
-                                </span>
-                            </h2>
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="oe_structure"/>
+
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-lg-12">
+                                <h2>Timesheet Report for <span t-field="doc.name" /></h2>
+                            </div>
                         </div>
-                    </div>
-                     <div class="oe_structure"/>
-                    <t t-if="timesheet_ids" t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()'/>
-                    <t t-set='lines' t-value='timesheet_ids'/>
-                    <t t-call="account_sale_timesheet_report.timesheet_table"/>
-                    <div class="oe_structure"/>
+                        <p>Project: <span t-esc="''.join(timesheet_ids.project_id.mapped('display_name'))" /><br />
+                        From <t t-esc="min_date"/> until <t t-esc="max_date"/>
+                        </p>
+
+                        <div class="oe_structure"/>
+
+                        <t t-if="timesheet_ids" t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()'/>
+                        <t t-set='lines' t-value='timesheet_ids'/>
+                        <t t-call="account_sale_timesheet_report.timesheet_table"/>
+
+                        <div class="oe_structure"/>
+                    </t>
                 </div>
             </t>
         </t>

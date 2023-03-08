@@ -8,11 +8,9 @@
                 <t t-set='timesheet_ids' t-value='o.timesheet_ids' />
                 <t t-set="show_task" t-value="bool(timesheet_ids.mapped('task_id'))" />
                 <t t-set="show_project" t-value="len(timesheet_ids.mapped('project_id')) > 1" />
-                <h3>
-                    <span> Timesheet Entries <t t-if="len(timesheet_ids.mapped('project_id')) == 1">
-                        for the <t t-esc="timesheet_ids.mapped('project_id')[0].name" /> Project </t>
-                    </span>
-                </h3>
+
+                <h3>Timesheet Report</h3>
+
                 <t t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()' />
                 <t t-set='lines' t-value='timesheet_ids' />
                 <t t-call="account_sale_timesheet_report.timesheet_table" />
