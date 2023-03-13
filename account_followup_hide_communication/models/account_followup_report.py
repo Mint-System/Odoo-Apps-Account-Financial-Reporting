@@ -15,11 +15,9 @@ class AccountFollowupReport(models.AbstractModel):
 
     def _get_lines(self, options, line_id=None):
         res = super(AccountFollowupReport , self)._get_lines(options, line_id)
-        _logger.warning(res)
         for index, item in enumerate(res):
             columns = item.get('columns')      
             if columns:
                 columns.pop(3)
                 res[index]['columns'] = columns
-        _logger.warning(res)
         return res
