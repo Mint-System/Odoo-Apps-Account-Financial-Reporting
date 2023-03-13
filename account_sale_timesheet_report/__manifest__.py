@@ -6,7 +6,7 @@
     "author": "Mint System GmbH, Odoo Community Association (OCA)",
     "website": "https://www.mint-system.ch",
     "category": "Accounting",
-    "version": "15.0.1.2.1",
+    "version": "15.0.1.2.2",
     "license": "AGPL-3",
     "depends": ["account_sale_timesheet"],
     "data": [

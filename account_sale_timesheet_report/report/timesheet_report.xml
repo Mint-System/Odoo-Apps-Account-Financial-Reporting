@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <p>Project: <span t-esc="''.join(timesheet_ids.project_id.mapped('display_name'))" /><br />
-                        From <t t-esc="min_date"/> until <t t-esc="max_date"/>
+                        From <t t-esc="min_date" t-options="{'widget': 'date'}" /> until <t t-esc="max_date" t-options="{'widget': 'date'}"/>
                         </p>
 
                         <div class="oe_structure"/>
