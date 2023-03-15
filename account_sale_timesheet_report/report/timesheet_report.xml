@@ -32,7 +32,7 @@
                                 <span t-if="not line.user_id.partner_id" t-esc="line.employee_id.name+':'"/><br />
                                 <span t-field="line.name" t-options="{'widget': 'text'}"/>
                             </td>
-                            <td  id="line_project_id" t-if="show_project">
+                            <td id="line_project_id" t-if="show_project">
                                 <span t-field="line.project_id.sudo().name"/>
                             </td>
                             <td  id="line_task_id" t-if="show_task">
@@ -47,7 +47,7 @@
                             <t t-set="nbCols" t-value="4"/>
                             <t t-if="show_project" t-set="nbCols" t-value="nbCols + 1"/>
                             <t t-if="show_task" t-set="nbCols" t-value="nbCols + 1"/>
-                            <td class="text-right" t-attf-colspan="{{nbCols}}">
+                            <td id="line_sum_amount" class="text-right" t-attf-colspan="{{nbCols}}">
                                 <strong t-if="is_uom_day">
                                     <span style="margin-right: 15px;">Total (Days)</span>
                                     <t t-esc="lines._convert_hours_to_days(sum(lines.mapped('unit_amount')))" t-options="{'widget': 'timesheet_uom'}"/>
