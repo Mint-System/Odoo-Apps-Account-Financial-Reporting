@@ -28,8 +28,8 @@
                                <span t-field="line.date"/>
                             </td>
                             <td id="line_partner_and_name">
-                                <span t-field="line.user_id.partner_id.name"/>
-                                <span t-if="not line.user_id.partner_id.name" t-field="line.employee_id"/>:<br />
+                                <span t-if="line.user_id.partner_id" t-esc="line.user_id.partner_id.name+':'"/>
+                                <span t-if="not line.user_id.partner_id" t-esc="line.employee_id.name+':'"/><br />
                                 <span t-field="line.name" t-options="{'widget': 'text'}"/>
                             </td>
                             <td  id="line_project_id" t-if="show_project">
@@ -81,11 +81,12 @@
 
                         <div class="row" style="margin-top:10px;">
                             <div class="col-lg-12">
-                                <h2>Timesheet Report for <span t-field="doc.name" /></h2>
+                                <h2>Timesheet Report for Invoice <span t-field="doc.name" /></h2>
                             </div>
                         </div>
-                        <p>Project: <span t-esc="''.join(timesheet_ids.project_id.mapped('display_name'))" /><br />
-                        From <t t-esc="min_date" t-options="{'widget': 'date'}" /> until <t t-esc="max_date" t-options="{'widget': 'date'}"/>
+                        <p>
+                        Project: <span t-esc="''.join(timesheet_ids.project_id.mapped('display_name'))" /><br />
+                        Period: <t t-esc="min_date" t-options="{'widget': 'date'}" /> until <t t-esc="max_date" t-options="{'widget': 'date'}"/>
                         </p>
 
                         <div class="oe_structure"/>
@@ -107,8 +108,8 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">account_sale_timesheet_report.timesheet_report</field>
         <field name="report_file">timesheet_report</field>
-        <field name="print_report_name">'Timesheet Report for %s' % (object.name)</field>
-        <field name="attachment">'Timesheet Report for '+object.name+'.pdf'</field>
+        <field name="print_report_name">'Timesheet Report %s' % (object.name)</field>
+        <field name="attachment">'Timesheet Report '+object.name+'.pdf'</field>
         <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_type">report</field>
     </record>
