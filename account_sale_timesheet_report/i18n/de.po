@@ -77,7 +77,7 @@ msgstr "<span>Aufgabe</span>"
 #. module: account_sale_timesheet_report
 #: model:ir.actions.report,name:account_sale_timesheet_report.account_invoices
 msgid "Invoices with Timesheet"
-msgstr "Rechnungen mit Zeitnachweis"
+msgstr "Rechnungen mit Arbeitsrapport"
 
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_report
@@ -88,7 +88,7 @@ msgstr "Projekt:"
 #: model:ir.actions.report,name:account_sale_timesheet_report.action_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.report_invoice_document
 msgid "Timesheet Report"
-msgstr "Zeitnachweis"
+msgstr "Arbeitsrapport"
 
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_report

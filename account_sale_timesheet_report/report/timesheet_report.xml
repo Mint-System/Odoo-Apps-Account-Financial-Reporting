@@ -92,7 +92,7 @@
                         <div class="oe_structure"/>
 
                         <t t-if="timesheet_ids" t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()'/>
-                        <t t-set='lines' t-value='timesheet_ids'/>
+                        <t t-set='lines' t-value='timesheet_ids.sorted(lambda t: t.date)'/>
                         <t t-call="account_sale_timesheet_report.timesheet_table"/>
 
                         <div class="oe_structure"/>
