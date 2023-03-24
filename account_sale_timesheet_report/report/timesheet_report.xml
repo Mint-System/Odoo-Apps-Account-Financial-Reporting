@@ -80,7 +80,7 @@
                         <t t-if="groups">
                             <t t-foreach="groups" t-as="group">
                                 <t t-set='lines' t-value='timesheet_ids.filtered(lambda t: group == t.so_line)'/>
-                                <t t-elif="lines">
+                                <t t-if="lines">
                                     <tr class="bg-200 font-weight-bold o_line_section">
                                         <td colspan="99">
                                             <span id="line_group" t-esc="group.name" /><br/>
