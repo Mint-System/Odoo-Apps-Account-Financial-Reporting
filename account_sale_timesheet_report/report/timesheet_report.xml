@@ -144,7 +144,7 @@
                                     <span t-esc="group.qty_invoiced"/>
                                 </td>
                                 <td id="line_remaining" class="text-right">
-                                    <span t-esc="group.product_uom_qty - group.qty_invoiced"/>
+                                    <span t-if="group.product_uom_qty != 0.0" t-esc="group.product_uom_qty - group.qty_invoiced"/>
                                 </td>
                             </tr>
                         </tbody>
