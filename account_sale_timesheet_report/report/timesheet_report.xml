@@ -1,68 +1,16 @@
 <odoo>
-    <!-- Template: odoo/addons/hr_timesheet/report/report_timesheet_templates.xml -->
-    <!-- Added unique ids -->
-    <template id="account_sale_timesheet_report.timesheet_table">
-        <div class="row" style="margin-top:10px;">
-            <div class="col-lg-12">
-                <style>
-                    table.table-timesheet-entries th {
-                        vertical-align: bottom
-                    }
-                </style>
-                <table class="table table-sm table-timesheet-entries">
-                    <thead>
-                        <tr>
-                            <th id="date"><span>Date</span></th>
-                            <th id="name"><span>Responsible / Description</span></th>
-                            <th id="project_id" t-if="show_project"><span>Project</span></th>
-                            <th id="task_id" t-if="show_task"><span>Task</span></th>
-                            <th id="unit_amount" class="text-right">
-                                <span t-if="is_uom_day"><span style="white-space: nowrap;">Time Spent</span> (Days)</span>
-                                <span t-else=""><span style="white-space: nowrap;">Time Spent</span> (Hours)</span>
-                            </th>
-                        </tr>
-                   </thead>
-                   <tbody>
-                        <tr t-foreach="lines" t-as="line">
-                            <td id="line_date">
-                               <span t-field="line.date"/>
-                            </td>
-                            <td id="line_partner_and_name">
-                                <span t-if="line.user_id.partner_id" t-esc="line.user_id.partner_id.name+':'"/>
-                                <span t-if="not line.user_id.partner_id" t-esc="line.employee_id.name+':'"/><br />
-                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
-                            </td>
-                            <td id="line_project_id" t-if="show_project">
-                                <span t-field="line.project_id.sudo().name"/>
-                            </td>
-                            <td  id="line_task_id" t-if="show_task">
-                                <t t-if="line.task_id"><span t-field="line.task_id.sudo().name"/></t>
-                            </td>
-                            <td  id="line_unit_amount" class="text-right">
-                                <span t-if="is_uom_day" t-esc="line._get_timesheet_time_day()" t-options="{'widget': 'timesheet_uom'}"/>
-                                <span t-else="" t-field="line.unit_amount" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <t t-set="nbCols" t-value="4"/>
-                            <t t-if="show_project" t-set="nbCols" t-value="nbCols + 1"/>
-                            <t t-if="show_task" t-set="nbCols" t-value="nbCols + 1"/>
-                            <td id="line_sum_amount" class="text-right" t-attf-colspan="{{nbCols}}">
-                                <strong t-if="is_uom_day">
-                                    <span style="margin-right: 15px;">Total (Days)</span>
-                                    <t t-esc="lines._convert_hours_to_days(sum(lines.mapped('unit_amount')))" t-options="{'widget': 'timesheet_uom'}"/>
-                                </strong>
-                                <strong t-else="">
-                                    <span style="margin-right: 15px;">Total (Hours)</span>
-                                    <t t-esc="sum(lines.mapped('unit_amount'))" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
-                                </strong>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </template>
+
+    <record id="action_timesheet_report" model="ir.actions.report">
+        <field name="name">Timesheet Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_sale_timesheet_report.timesheet_report</field>
+        <field name="report_file">timesheet_report</field>
+        <field name="print_report_name">'Timesheet Report %s' % (object.name)</field>
+        <field name="attachment">'Timesheet Report '+object.name+'.pdf'</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
 
     <!-- Template: odoo/addons/hr_timesheet/report/report_timesheet_templates.xml -->
     <template id="account_sale_timesheet_report.timesheet_report">
@@ -92,7 +40,9 @@
                         <div class="oe_structure"/>
 
                         <t t-if="timesheet_ids" t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()'/>
+                        <t t-set='groups' t-value='list(set(doc.invoice_line_ids.sale_line_ids))'/>
                         <t t-set='lines' t-value='timesheet_ids.sorted(lambda t: t.date)'/>
+                        
                         <t t-call="account_sale_timesheet_report.timesheet_table"/>
 
                         <div class="oe_structure"/>
@@ -102,16 +52,129 @@
         </t>
     </template>
 
-    <record id="action_timesheet_report" model="ir.actions.report">
-        <field name="name">Timesheet Report</field>
-        <field name="model">account.move</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">account_sale_timesheet_report.timesheet_report</field>
-        <field name="report_file">timesheet_report</field>
-        <field name="print_report_name">'Timesheet Report %s' % (object.name)</field>
-        <field name="attachment">'Timesheet Report '+object.name+'.pdf'</field>
-        <field name="binding_model_id" ref="account.model_account_move"/>
-        <field name="binding_type">report</field>
-    </record>
+    <!-- Template: odoo/addons/hr_timesheet/report/report_timesheet_templates.xml -->
+    <template id="account_sale_timesheet_report.timesheet_table">
+        <div class="row" style="margin-top:10px;">
+            <div class="col-lg-12">
+                <style>
+                    table.table-timesheet-entries th {
+                        vertical-align: bottom
+                    }
+                </style>
+                <table class="table table-sm table-timesheet-entries">
+                    <thead>
+                        <tr>
+                            <th id="date"><span>Date</span></th>
+                            <th id="name"><span>Responsible / Description</span></th>
+                            <th id="project_id" t-if="show_project"><span>Project</span></th>
+                            <th id="task_id" t-if="show_task"><span>Task</span></th>
+                            <th id="unit_amount" class="text-right">
+                                <span t-if="is_uom_day"><span style="white-space: nowrap;">Time Spent</span> (Days)</span>
+                                <span t-else=""><span style="white-space: nowrap;">Time Spent</span> (Hours)</span>
+                            </th>
+                        </tr>
+                   </thead>
+
+                   <tbody>
+
+                        <t t-if="groups">
+                            <t t-foreach="groups" t-as="group">
+                                <tr class="bg-200 o_line_section">
+                                    <td colspan="99">
+                                        <span id="line_group" class="font-weight-bold" t-esc="group.name" /><br/>
+                                        <span id="line_invoiced">Invoiced: <span t-esc="group.qty_invoiced" /> / <span t-esc="group.product_uom_qty" /></span>
+                                    </td>
+                                </tr>
+
+                                <t t-set='lines' t-value='timesheet_ids.filtered(lambda t: group == t.so_line)'/>
+                                <t t-call="account_sale_timesheet_report.timesheet_table_lines"/>
+                            </t>
+                        </t>
+                        <t t-elif="lines">
+                            <t t-call="account_sale_timesheet_report.timesheet_table_lines"/>
+                        </t>
+
+                        <tr>
+                            <t t-set="nbCols" t-value="4"/>
+                            <t t-if="show_project" t-set="nbCols" t-value="nbCols + 1"/>
+                            <t t-if="show_task" t-set="nbCols" t-value="nbCols + 1"/>
+                            <td id="line_sum_amount" class="text-right" t-attf-colspan="{{nbCols}}">
+                                <strong t-if="is_uom_day">
+                                    <span style="margin-right: 15px;">Total (Days)</span>
+                                    <t t-esc="lines._convert_hours_to_days(sum(lines.mapped('unit_amount')))" t-options="{'widget': 'timesheet_uom'}"/>
+                                </strong>
+                                <strong t-else="">
+                                    <span style="margin-right: 15px;">Total (Hours)</span>
+                                    <t t-esc="sum(lines.mapped('unit_amount'))" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                </strong>
+                            </td>
+                        </tr>
+                   </tbody>                   
+                </table>
+
+                <t t-if="groups">
+                    <h4 id="order_summary">Order Summary</h4>
+                    <style>
+                        table.table-order-summary {
+                            width: revert;
+                        }
+                        table.table-order-summary tbody {
+                            border-bottom: 1px solid #dee2e6;
+                        }
+                    </style>
+                    <table class="table table-sm table-order-summary">
+                        <thead>
+                            <tr>
+                                <th id="order_line"><span>Order Line</span></th>
+                                <th id="ordered"><span>Ordered</span></th>
+                                <th id="invoiced"><span>Invoiced</span></th>
+                                <th id="remaining"><span>Reamining</span></th>
+                            </tr>
+                       </thead>
+                       <tbody>
+                            <tr t-foreach="groups" t-as="group">
+                                <td id="line_order_line">
+                                    <span t-esc="group.name"/>
+                                </td>
+                                <td id="line_ordered" class="text-right">
+                                    <span t-esc="group.product_uom_qty"/>
+                                </td>
+                                <td id="line_order_invoiced" class="text-right">
+                                    <span t-esc="group.qty_invoiced"/>
+                                </td>
+                                <td id="line_remaining" class="text-right">
+                                    <span t-esc="group.product_uom_qty - group.qty_invoiced"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+            </div>
+        </div>
+    </template>
+
+    <template id="account_sale_timesheet_report.timesheet_table_lines">
+        <tr t-foreach="lines" t-as="line">
+            <td id="line_date">
+               <span t-field="line.date"/>
+            </td>
+            <td id="line_partner_and_name">
+                <span t-if="line.user_id.partner_id" t-esc="line.user_id.partner_id.name+':'"/>
+                <span t-if="not line.user_id.partner_id" t-esc="line.employee_id.name+':'"/><br />
+                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+            </td>
+            <td id="line_project_id" t-if="show_project">
+                <span t-field="line.project_id.sudo().name"/>
+            </td>
+            <td  id="line_task_id" t-if="show_task">
+                <t t-if="line.task_id"><span t-field="line.task_id.sudo().name"/></t>
+            </td>
+            <td  id="line_unit_amount" class="text-right">
+                <span t-if="is_uom_day" t-esc="line._get_timesheet_time_day()" t-options="{'widget': 'timesheet_uom'}"/>
+                <span t-else="" t-field="line.unit_amount" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+            </td>
+        </tr>
+    </template>
 
 </odoo>
