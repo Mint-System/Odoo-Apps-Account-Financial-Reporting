@@ -145,13 +145,13 @@
                                     <span t-esc="group.name"/>
                                 </td>
                                 <td id="line_ordered" class="text-right">
-                                    <span t-esc="group.product_uom_qty"/>
+                                    <span t-esc="group.product_uom_qty" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
                                 </td>
                                 <td id="line_order_invoiced" class="text-right">
-                                    <span t-esc="group.qty_invoiced"/>
+                                    <span t-esc="group.qty_invoiced" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
                                 </td>
                                 <td id="line_remaining" class="text-right">
-                                    <span t-esc="(group.product_uom_qty - group.qty_invoiced) if group.product_uom_qty != 0.0 else 0.0"/>
+                                    <span t-esc="(group.product_uom_qty - group.qty_invoiced) if group.product_uom_qty != 0.0 else 0.0" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
                                 </td>
                             </tr>
                         </tbody>
