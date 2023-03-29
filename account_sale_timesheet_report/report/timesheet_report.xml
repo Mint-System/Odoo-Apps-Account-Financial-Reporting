@@ -80,6 +80,8 @@
 
                    <tbody>
 
+                        <!-- If group is given add section filter lines by group-->
+                        <t t-set='sum_lines' t-value='lines'/>
                         <t t-if="groups">
                             <t t-foreach="groups" t-as="group">
                                 <t t-set='lines' t-value='timesheet_ids.filtered(lambda t: group == t.so_line)'/>
@@ -94,10 +96,11 @@
                                 </t>
                             </t>
                         </t>
-                        <t t-elif="lines">
+                        <t t-elif="lines">                            
                             <t t-call="account_sale_timesheet_report.timesheet_table_lines"/>
                         </t>
-
+                        
+                        <!-- Show sum of all lines -->
                         <tr>
                             <t t-set="nbCols" t-value="4"/>
                             <t t-if="show_project" t-set="nbCols" t-value="nbCols + 1"/>
@@ -105,11 +108,11 @@
                             <td id="line_sum_amount" class="text-right" t-attf-colspan="{{nbCols}}">
                                 <strong t-if="is_uom_day">
                                     <span style="margin-right: 15px;">Total (Days)</span>
-                                    <t t-esc="lines._convert_hours_to_days(sum(lines.mapped('unit_amount')))" t-options="{'widget': 'timesheet_uom'}"/>
+                                    <t t-esc="sum_lines._convert_hours_to_days(sum(sum_lines.mapped('unit_amount')))" t-options="{'widget': 'timesheet_uom'}"/>
                                 </strong>
                                 <strong t-else="">
                                     <span style="margin-right: 15px;">Total (Hours)</span>
-                                    <t t-esc="sum(lines.mapped('unit_amount'))" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                    <t t-esc="sum(sum_lines.mapped('unit_amount'))" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
                                 </strong>
                             </td>
                         </tr>
