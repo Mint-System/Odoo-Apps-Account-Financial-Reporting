@@ -12,6 +12,7 @@
                 <h3>Timesheet Report</h3>
 
                 <t t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()' />
+                <t t-set='groups' t-value='o.invoice_line_ids.sale_line_ids.filtered(lambda s: s.product_id.service_policy)'/>
                 <t t-set='lines' t-value='timesheet_ids.sorted(lambda t: t.date)' />
                 <t t-call="account_sale_timesheet_report.timesheet_table" />
             </t>
