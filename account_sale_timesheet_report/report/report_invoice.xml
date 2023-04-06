@@ -5,15 +5,17 @@
         inherit_id="account.report_invoice_document">
         <xpath expr="//div[@id='qrcode']" position="after">
             <t t-if="o.timesheet_ids and print_with_timesheets">
-                <t t-set='timesheet_ids' t-value='o.timesheet_ids' />
+
+                <t t-set="timesheet_ids" t-value="o.timesheet_ids" />
                 <t t-set="show_task" t-value="bool(timesheet_ids.mapped('task_id'))" />
                 <t t-set="show_project" t-value="len(timesheet_ids.mapped('project_id')) > 1" />
+                <t t-set="is_uom_day" t-value="timesheet_ids[0]._is_timesheet_encode_uom_day()" />
+                <t t-set="groups" t-value="o.invoice_line_ids.sale_line_ids.filtered(lambda s: s.is_service and not (s.is_expense or s.is_downpayment))"/>
+                <t t-set="groups_with_ordered_qty" t-value="groups.filtered(lambda g: g.product_uom_qty > 0.0)"/>
+                <t t-set="lines" t-value="timesheet_ids.sorted(lambda t: t.date)" />
 
                 <h3>Timesheet Report</h3>
 
-                <t t-set='is_uom_day' t-value='timesheet_ids[0]._is_timesheet_encode_uom_day()' />
-                <t t-set='groups' t-value='o.invoice_line_ids.sale_line_ids.filtered(lambda s: s.is_service and not (s.is_expense or s.is_downpayment))'/>
-                <t t-set='lines' t-value='timesheet_ids.sorted(lambda t: t.date)' />
                 <t t-call="account_sale_timesheet_report.timesheet_table" />
             </t>
         </xpath>
