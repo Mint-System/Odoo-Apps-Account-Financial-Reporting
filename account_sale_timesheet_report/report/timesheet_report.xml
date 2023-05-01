@@ -8,46 +8,44 @@
         <field name="report_file">timesheet_report</field>
         <field name="print_report_name">'Timesheet Report %s' % (object.name)</field>
         <field name="attachment">'Timesheet Report '+object.name+'.pdf'</field>
-        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move" />
         <field name="binding_type">report</field>
     </record>
 
     <template id="account_sale_timesheet_report.timesheet_report">
         <t t-call="web.html_container">
-            <t  t-call="web.external_layout">
+            <t t-call="web.external_layout">
                 <t t-if="docs.timesheet_ids">
 
-                    <t t-set="timesheet_ids" t-value="docs.timesheet_ids"/>
-                    <t t-set="company" t-value="timesheet_ids.mapped('project_id')[0].company_id if len(timesheet_ids.mapped('project_id')) == 1 else docs.env.company"/>
-                    <t t-set="show_task" t-value="bool(timesheet_ids.mapped('task_id'))"/>
-                    <t t-set="show_project" t-value="len(timesheet_ids.mapped('project_id')) > 1"/>                    
-                    <t t-set="min_date" t-value="min(timesheet_ids.mapped('date'))"/>
-                    <t t-set="max_date" t-value="max(timesheet_ids.mapped('date'))"/>
+                    <t t-set="timesheet_ids" t-value="docs.timesheet_ids" />
+                    <t t-set="company"
+                        t-value="timesheet_ids.mapped('project_id')[0].company_id if len(timesheet_ids.mapped('project_id')) == 1 else docs.env.company" />
+                    <t t-set="show_task" t-value="bool(timesheet_ids.mapped('task_id'))" />
+                    <t t-set="show_project" t-value="len(timesheet_ids.mapped('project_id')) > 1" />
 
                     <div class="page">
                         <t t-foreach="docs" t-as="doc">
-                            <t t-set="is_uom_day" t-if="timesheet_ids" t-value="timesheet_ids[0]._is_timesheet_encode_uom_day()"/>
-                            <t t-set="groups" t-value="doc.invoice_line_ids.sale_line_ids.filtered(lambda s: s.is_service and not (s.is_expense or s.is_downpayment))"/>
-                            <t t-set="groups_with_ordered_qty" t-value="groups.filtered(lambda g: g.product_uom_qty > 0.0)"/>
-                            <t t-set="lines" t-value="timesheet_ids.sorted(lambda t: t.date)"/>
+                            <t t-set="is_uom_day" t-if="timesheet_ids"
+                                t-value="timesheet_ids[0]._is_timesheet_encode_uom_day()" />
+                            <t t-set="groups"
+                                t-value="doc.invoice_line_ids.sale_line_ids.filtered(lambda s: s.is_service and not (s.is_expense or s.is_downpayment))" />
+                            <t t-set="groups_with_ordered_qty"
+                                t-value="groups.filtered(lambda g: g.product_uom_qty > 0.0)" />
+                            <t t-set="lines" t-value="timesheet_ids.sorted(lambda t: t.date)" />
 
-                            <div class="oe_structure"/>
+                            <div class="oe_structure" />
 
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-lg-12">
                                     <h2>Timesheet Report for Invoice <span t-field="doc.name" /></h2>
                                 </div>
                             </div>
-                            <p>
-                            Project: <span t-esc="''.join(timesheet_ids.project_id.mapped('display_name'))" /><br />
-                            Period: <t t-esc="min_date" t-options="{'widget': 'date'}" /> until <t t-esc="max_date" t-options="{'widget': 'date'}"/>
-                            </p>
 
-                            <div class="oe_structure"/>
-                            
-                            <t t-call="account_sale_timesheet_report.timesheet_table"/>
+                            <div class="oe_structure" />
 
-                            <div class="oe_structure"/>
+                            <t t-call="account_sale_timesheet_report.timesheet_table" />
+
+                            <div class="oe_structure" />
                         </t>
                     </div>
                 </t>
@@ -58,98 +56,131 @@
     <template id="account_sale_timesheet_report.timesheet_table">
         <div class="row" style="margin-top:10px;">
             <div class="col-lg-12">
+
+                <t t-set="min_date" t-value="min(timesheet_ids.mapped('date'))" />
+                <t t-set="max_date" t-value="max(timesheet_ids.mapped('date'))" />
+                <p> Project: <span t-esc="''.join(timesheet_ids.project_id.mapped('display_name'))" /><br />
+                    Period: <t t-esc="min_date" t-options="{'widget': 'date'}" /> until <t
+                        t-esc="max_date" t-options="{'widget': 'date'}" />
+                </p>
+
                 <style>
                     table.table-timesheet-entries th {
-                        vertical-align: bottom
+                    vertical-align: bottom
                     }
                 </style>
                 <table class="table table-sm table-timesheet-entries">
                     <thead>
                         <tr>
-                            <th id="date"><span>Date</span></th>
-                            <th id="name"><span>Responsible / Description</span></th>
-                            <th id="project_id" t-if="show_project"><span>Project</span></th>
-                            <th id="task_id" t-if="show_task"><span>Task</span></th>
+                            <th id="date">
+                                <span>Date</span>
+                            </th>
+                            <th id="name">
+                                <span>Responsible / Description</span>
+                            </th>
+                            <th id="project_id" t-if="show_project">
+                                <span>Project</span>
+                            </th>
+                            <th id="task_id" t-if="show_task">
+                                <span>Task</span>
+                            </th>
                             <th id="unit_amount" class="text-right">
                                 <span t-if="is_uom_day"><span style="white-space: nowrap;">Time Spent</span> (Days)</span>
                                 <span t-else=""><span style="white-space: nowrap;">Time Spent</span> (Hours)</span>
                             </th>
                         </tr>
-                   </thead>
+                    </thead>
 
-                   <tbody>
+                    <tbody>
 
                         <!-- If group is given add section filter lines by group-->
-                        <t t-set='sum_lines' t-value='lines'/>
+                        <t t-set='sum_lines' t-value='lines' />
                         <t t-if="groups">
                             <t t-foreach="groups" t-as="group">
-                                <t t-set='lines' t-value='timesheet_ids.filtered(lambda t: group == t.so_line)'/>
+                                <t t-set='lines'
+                                    t-value='timesheet_ids.filtered(lambda t: group == t.so_line)' />
                                 <t t-if="lines">
                                     <tr class="bg-200 font-weight-bold o_line_section">
                                         <td colspan="99">
-                                            <span id="line_group" t-esc="group.name" /><br/>
+                                            <span id="line_group" t-esc="group.name" />
+                                            <br />
                                         </td>
                                     </tr>
-                                    
-                                    <t t-call="account_sale_timesheet_report.timesheet_table_lines"/>
+
+                                    <t t-call="account_sale_timesheet_report.timesheet_table_lines" />
                                 </t>
                             </t>
                         </t>
-                        <t t-elif="lines">                            
-                            <t t-call="account_sale_timesheet_report.timesheet_table_lines"/>
+                        <t t-elif="lines">
+                            <t t-call="account_sale_timesheet_report.timesheet_table_lines" />
                         </t>
-                        
+
                         <!-- Show sum of all lines -->
                         <tr>
-                            <t t-set="nbCols" t-value="4"/>
-                            <t t-if="show_project" t-set="nbCols" t-value="nbCols + 1"/>
-                            <t t-if="show_task" t-set="nbCols" t-value="nbCols + 1"/>
+                            <t t-set="nbCols" t-value="4" />
+                            <t t-if="show_project" t-set="nbCols" t-value="nbCols + 1" />
+                            <t t-if="show_task" t-set="nbCols" t-value="nbCols + 1" />
                             <td id="line_sum_amount" class="text-right" t-attf-colspan="{{nbCols}}">
                                 <strong t-if="is_uom_day">
-                                    <span style="margin-right: 15px;">Total (Days)</span>
-                                    <t t-esc="sum_lines._convert_hours_to_days(sum(sum_lines.mapped('unit_amount')))" t-options="{'widget': 'timesheet_uom'}"/>
+                                    <span class="mr-2">Total (Days)</span>
+                                    <t
+                                        t-esc="sum_lines._convert_hours_to_days(sum(sum_lines.mapped('unit_amount')))"
+                                        t-options="{'widget': 'timesheet_uom'}" />
                                 </strong>
                                 <strong t-else="">
-                                    <span style="margin-right: 15px;">Total (Hours)</span>
-                                    <t t-esc="sum(sum_lines.mapped('unit_amount'))" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                    <span class="mr-2">Total (Hours)</span>
+                                    <t t-esc="sum(sum_lines.mapped('unit_amount'))"
+                                        t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}" />
                                 </strong>
                             </td>
                         </tr>
-                   </tbody>                   
+                    </tbody>
                 </table>
-                
+
                 <t t-if="groups and groups_with_ordered_qty">
                     <h4 id="order_summary">Order Summary</h4>
                     <style>
                         table.table-order-summary {
-                            width: revert;
+                        width: revert;
                         }
                         table.table-order-summary tbody {
-                            border-bottom: 1px solid #dee2e6;
+                        border-bottom: 1px solid #dee2e6;
                         }
                     </style>
                     <table class="table table-sm table-order-summary">
                         <thead>
                             <tr>
-                                <th id="order_line"><span>Order Line</span></th>
-                                <th id="ordered" class="text-right"><span>Ordered</span></th>
-                                <th id="invoiced" class="text-right"><span>Invoiced</span></th>
-                                <th id="remaining" class="text-right"><span>Reamining</span></th>
+                                <th id="order_line">
+                                    <span>Order Line</span>
+                                </th>
+                                <th id="ordered" class="text-right">
+                                    <span>Ordered</span>
+                                </th>
+                                <th id="invoiced" class="text-right">
+                                    <span>Invoiced</span>
+                                </th>
+                                <th id="remaining" class="text-right">
+                                    <span>Reamining</span>
+                                </th>
                             </tr>
-                       </thead>
-                       <tbody>
+                        </thead>
+                        <tbody>
                             <tr t-foreach="groups" t-as="group">
                                 <td id="line_order_line">
-                                    <span t-esc="group.name"/>
+                                    <span t-esc="group.name" />
                                 </td>
                                 <td id="line_ordered" class="text-right">
-                                    <span t-esc="group.product_uom_qty" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                    <span t-esc="group.product_uom_qty"
+                                        t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}" />
                                 </td>
                                 <td id="line_order_invoiced" class="text-right">
-                                    <span t-esc="group.qty_invoiced" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                    <span t-esc="group.qty_invoiced"
+                                        t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}" />
                                 </td>
                                 <td id="line_remaining" class="text-right">
-                                    <span t-esc="(group.product_uom_qty - group.qty_invoiced) if group.product_uom_qty != 0.0 else 0.0" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                    <span
+                                        t-esc="(group.product_uom_qty - group.qty_invoiced) if group.product_uom_qty != 0.0 else 0.0"
+                                        t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}" />
                                 </td>
                             </tr>
                         </tbody>
@@ -161,26 +192,45 @@
     </template>
 
     <template id="account_sale_timesheet_report.timesheet_table_lines">
+        <t t-set="current_subtotal" t-value="0" />
         <tr t-foreach="lines" t-as="line">
             <td id="line_date">
-               <span t-field="line.date"/>
+                <span t-field="line.date" />
             </td>
             <td id="line_partner_and_name">
-                <span t-if="line.user_id.partner_id" t-esc="line.user_id.partner_id.name+':'"/>
-                <span t-if="not line.user_id.partner_id" t-esc="line.employee_id.name+':'"/><br />
-                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                <span t-if="line.user_id.partner_id" t-esc="line.user_id.partner_id.name+':'" />
+                <span t-if="not line.user_id.partner_id" t-esc="line.employee_id.name+':'" />
+                <br />
+                <span t-field="line.name" t-options="{'widget': 'text'}" />
             </td>
             <td id="line_project_id" t-if="show_project">
-                <span t-field="line.project_id.sudo().name"/>
+                <span t-field="line.project_id.sudo().name" />
             </td>
-            <td  id="line_task_id" t-if="show_task">
-                <t t-if="line.task_id"><span t-field="line.task_id.sudo().name"/></t>
+            <td id="line_task_id" t-if="show_task">
+                <t t-if="line.task_id">
+                    <span t-field="line.task_id.sudo().name" />
+                </t>
             </td>
-            <td  id="line_unit_amount" class="text-right">
-                <span t-if="is_uom_day" t-esc="line._get_timesheet_time_day()" t-options="{'widget': 'timesheet_uom'}"/>
-                <span t-else="" t-field="line.unit_amount" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+            <td id="line_unit_amount" class="text-right">
+                <span t-if="is_uom_day" t-esc="line._get_timesheet_time_day()"
+                    t-options="{'widget': 'timesheet_uom'}" />
+                <span t-else="" t-field="line.unit_amount"
+                    t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}" />
             </td>
         </tr>
+        <tr class="text-right">
+            <td t-if="is_uom_day" name="line_section_subtotal" colspan="99">
+                <span class="mr16 mr-2">Subtotal</span>
+                <span t-esc="sum(lines.mapped(lambda l: l._get_timesheet_time_day()))"
+                    t-options="{'widget': 'timesheet_uom'}" />
+            </td>
+            <td t-else="" name="line_section_subtotal" colspan="99">
+                <span class="mr16 mr-2">Subtotal</span>
+                <span t-esc="sum(lines.mapped('unit_amount'))"
+                    t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}" />
+            </td>
+        </tr>
+
     </template>
 
 </odoo>
