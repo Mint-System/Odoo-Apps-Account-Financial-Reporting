@@ -2,11 +2,11 @@
     :target: http://www.gnu.org/licenses/gpl-3.0-standalone.html
     :alt: License: GPL-3
 
-=================================
-Account Move Line Contra Accounts
-=================================
+======================================
+Account General Ledger Contra Accounts
+======================================
 
-Show contra account of journal item.
+Add contra accounts to general ledger.
 
 For a detailed documentation have a look at https://www.odoo-wiki.org/.
 

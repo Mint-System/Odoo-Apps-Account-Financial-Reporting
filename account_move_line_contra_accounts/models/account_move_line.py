@@ -14,5 +14,4 @@ class AccountMoveLine(models.Model):
             account_codes = rec.move_id.line_ids.mapped('account_id.code')
             account_codes = list(filter(lambda c: c != rec.account_id.code, account_codes))
             account_codes.sort()
-            # _logger.warning([rec, account_codes])
             rec.contra_accounts = ', '.join(account_codes)
