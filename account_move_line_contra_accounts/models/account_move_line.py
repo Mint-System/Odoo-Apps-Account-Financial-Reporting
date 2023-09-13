@@ -14,7 +14,6 @@ class AccountMoveLine(models.Model):
             account_codes = (
                 line.account_id.code
                 for line in rec.move_id.line_ids
-                if line.account_id.code != rec.account_id.code
+                if line.account_id.code and line.account_id.code != rec.account_id.code
             )
-
-            rec.contra_accounts = ", ".join(sorted(set(account_codes)))
+            rec.contra_accounts = ", ".join(list(sorted(account_codes)))
