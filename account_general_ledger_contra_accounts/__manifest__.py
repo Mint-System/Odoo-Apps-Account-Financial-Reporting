@@ -13,4 +13,5 @@
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
+    "data": ["data/general_ledger.xml"],
 }
