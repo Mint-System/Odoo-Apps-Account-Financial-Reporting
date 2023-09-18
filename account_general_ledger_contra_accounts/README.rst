@@ -10,15 +10,6 @@ Add contra accounts to general ledger.
 
 For a detailed documentation have a look at https://www.odoo-wiki.org/.
 
-Usage
-~~~~~
-
-Clone module into Odoo addon directory.
-
-.. code-block:: bash
-
-    git clone git@github.com:mint-system/odoo-app-account-general-ledger-contra-accounts.git ./addons/account_general_ledger_contra_accounts
-
 Configuration
 ~~~~~~~~~~~~~
 

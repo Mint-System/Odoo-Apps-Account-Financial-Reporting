@@ -14,4 +14,5 @@ git clone git@github.com:mint-system/odoo-apps-account-financial-reporting.git .
 
 | Module | Summary |
 | --- | --- |
-|  |  |
+| [account_general_ledger_contra_accounts](account_general_ledger_contra_accounts) |         Add contra accounts to general ledger. |
+| [account_move_line_contra_accounts](account_move_line_contra_accounts) |         Show contra account of journal item. |
