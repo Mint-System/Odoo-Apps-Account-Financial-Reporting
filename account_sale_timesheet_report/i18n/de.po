@@ -121,7 +121,7 @@ msgstr "Auftragsübersicht"
 #. module: account_sale_timesheet_report
 #: model_terms:ir.ui.view,arch_db:account_sale_timesheet_report.timesheet_table
 msgid "Project:"
-msgstr "Projekt"
+msgstr "Projekt:"
 
 #. module: account_sale_timesheet_report
 #: model:ir.actions.report,name:account_sale_timesheet_report.action_timesheet_report
