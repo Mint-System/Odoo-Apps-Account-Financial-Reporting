@@ -30,7 +30,7 @@
                 <t t-foreach="docs_data" t-as="account">
 
                     <h4><t t-esc="account['code']"/> <t t-esc="account['name']"/></h4>
-                    
+
                     <style>
                         table.o_main_table {
                             font-size: 0.8rem;
