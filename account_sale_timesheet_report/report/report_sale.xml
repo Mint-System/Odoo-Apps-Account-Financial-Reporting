@@ -1,0 +1,56 @@
+<odoo>
+
+    <record id="action_timesheet_report_sale" model="ir.actions.report">
+        <field name="name">Timesheet Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_sale_timesheet_report.report_sale</field>
+        <field name="report_file">timesheet_report</field>
+        <field name="print_report_name">'Timesheet Report %s' % (object.name)</field>
+        <field name="attachment">'Timesheet Report '+object.name+'.pdf'</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="account_sale_timesheet_report.report_sale">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-if="docs.timesheet_ids">
+
+                    <t t-set="timesheet_ids" t-value="docs.timesheet_ids" />
+                    <t t-set="company"
+                        t-value="timesheet_ids.mapped('project_id')[0].company_id if len(timesheet_ids.mapped('project_id')) == 1 else docs.env.company" />
+                    <t t-set="order_lines" t-value="docs.order_line.filtered(lambda l: l.is_service and not (l.is_expense or l.is_downpayment))" />
+
+                        <t t-set="show_task" t-value="bool(timesheet_ids.mapped('task_id'))" />
+                    <t t-set="show_project" t-value="len(timesheet_ids.mapped('project_id')) > 1" />
+
+                    <div class="page">
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-set="is_uom_day" t-if="timesheet_ids"
+                                t-value="timesheet_ids[0]._is_timesheet_encode_uom_day()" />
+                            <t t-set="groups"
+                                t-value="doc.order_line.filtered(lambda s: s.is_service and not (s.is_expense or s.is_downpayment))" />
+                            <t t-set="lines" t-value="timesheet_ids.sorted(lambda t: t.date)" />
+
+                            <div class="oe_structure" />
+
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-lg-12">
+                                    <h2>Timesheet Report for Sale Order <span t-field="doc.name" /></h2>
+                                </div>
+                            </div>
+
+                            <div class="oe_structure" />
+
+                            <t t-call="account_sale_timesheet_report.timesheet_table" />
+
+                            <div class="oe_structure" />
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    </odoo>
