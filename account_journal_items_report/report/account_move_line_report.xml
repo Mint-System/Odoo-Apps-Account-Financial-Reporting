@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="account_journal_items_report" model="ir.actions.report">
@@ -25,28 +25,34 @@
 
                 <h1>Account Statement</h1>
 
-                <p>From <t t-esc="from_date" t-options="{'widget': 'date'}" /> until <t t-esc="until_date" t-options="{'widget': 'date'}"/></p>
+                <p>From <t t-esc="from_date" t-options="{'widget': 'date'}" /> until <t
+                        t-esc="until_date"
+                        t-options="{'widget': 'date'}"
+                    /></p>
 
                 <t t-foreach="docs_data" t-as="account">
 
-                    <h4><t t-esc="account['code']"/> <t t-esc="account['name']"/></h4>
+                    <h4><t t-esc="account['code']" /> <t t-esc="account['name']" /></h4>
 
                     <style>
                         table.o_main_table {
                             font-size: 0.8rem;
                         }
                     </style>
-                    <table class="table table-sm o_main_table" name="journal_items_table">
+                    <table
+                        class="table table-sm o_main_table"
+                        name="journal_items_table"
+                    >
                         <thead>
                             <tr>
                                 <th name="th_date">
                                     Date
                                 </th>
                                 <th name="th_reference">
-                                    Journal<br/><i>Posting Text</i>
+                                    Journal<br /><i>Posting Text</i>
                                 </th>
                                 <th name="th_account">
-                                    Entry<br/><i>Contra Accounts</i>
+                                    Entry<br /><i>Contra Accounts</i>
                                 </th>
                                 <th name="th_debit" class="text-right">
                                     Debit
@@ -58,7 +64,7 @@
                                     Balance
                                 </th>
                                 <th name="th_cumulated_balance" class="text-right">
-                                    Cumulated<br/>Balance
+                                    Cumulated<br />Balance
                                 </th>
                             </tr>
                         </thead>
@@ -67,14 +73,17 @@
 
                                 <tr>
                                     <td id="date">
-                                        <t t-esc="line['date']" t-options="{'widget': 'date'}" />
+                                        <t
+                                            t-esc="line['date']"
+                                            t-options="{'widget': 'date'}"
+                                        />
                                     </td>
                                     <td id="name">
-                                        <t t-esc="line['journal_id'][1]" /><br/>
+                                        <t t-esc="line['journal_id'][1]" /><br />
                                         <i t-esc="line['name']" />
                                     </td>
                                     <td id="entry">
-                                        <t t-esc="line['move_id'][1]" /><br/>
+                                        <t t-esc="line['move_id'][1]" /><br />
                                         <i t-esc="line['contra_accounts']" />
                                     </td>
                                     <td id="debit" class="text-right">
@@ -84,10 +93,16 @@
                                         <t t-esc="'{0:.2f}'.format(line['credit'])" />
                                     </td>
                                     <td id="balance" class="text-right">
-                                        <t t-esc="line['balance']" t-options="{'widget': 'monetary', 'display_currency': docs.currency_id[:1]}" />
+                                        <t
+                                            t-esc="line['balance']"
+                                            t-options="{'widget': 'monetary', 'display_currency': docs.currency_id[:1]}"
+                                        />
                                     </td>
                                     <td id="cumulated_balance" class="text-right">
-                                        <t t-esc="line['cumulated_balance']" t-options="{'widget': 'monetary', 'display_currency': docs.currency_id[:1]}" />
+                                        <t
+                                            t-esc="line['cumulated_balance']"
+                                            t-options="{'widget': 'monetary', 'display_currency': docs.currency_id[:1]}"
+                                        />
                                     </td>
                                 </tr>
 
