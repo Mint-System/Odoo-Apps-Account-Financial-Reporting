@@ -17,8 +17,8 @@ class AccountGeneralLedger(models.AbstractModel):
         for key1, level1 in aml_results.items():
             for key2, level2 in level1.items():
                 for key, line in level2.items():
-                    if line['ref']:
-                        line['communication'] = line['name']
+                    if line["ref"]:
+                        line["communication"] = line["name"]
         return aml_results, has_more
 
     # def _get_query_amls(
