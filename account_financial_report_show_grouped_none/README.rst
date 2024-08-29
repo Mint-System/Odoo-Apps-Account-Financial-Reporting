@@ -3,7 +3,7 @@
     :alt: License: GPL-3
 
 ===========================================
-Account Financial Report  Show Grouped None
+Account Financial Report Show Grouped None
 ===========================================
 
 Show move lines if grouped by none is selected.
