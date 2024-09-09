@@ -1,0 +1,2 @@
+- Open Accounting > Reporting > OCA accounting reports > General Ledger
+- Generate the report with grouping by "None" and export PDF, the move lines in the report will not be shown
