@@ -1,0 +1,2 @@
+- Open Accounting > Reporting > OCA accounting reports > General Ledger and produce a report
+- The report now has a new field Contra Account with the respective contra accounts for each line
