@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_account_oss_report_tree" model="ir.ui.view">
+        <field name="name">account.oss.report.tree</field>
+        <field name="model">account.oss.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="country_code"/>
+                <field name="tax_rate"/>
+                <field name="base_amount"/>
+                <field name="tax_amount"/>
+                <field name="net_amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_account_oss_report" model="ir.actions.act_window">
+        <field name="name">OSS Tax Report</field>
+        <field name="res_model">account.oss.report</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!-- <menuitem id="menu_account_oss_report" -->
+    <!--           name="OSS Tax Report" -->
+    <!--           parent="account.menu_finance_reports" -->
+    <!--           action="action_account_oss_report"/> -->
+
+</odoo>
