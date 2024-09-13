@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 
-
 class AccountOssReport(models.Model):
     _name = "account.oss.report"
     _description = "OSS Tax Report"
@@ -10,9 +9,7 @@ class AccountOssReport(models.Model):
     base_amount = fields.Float()
     tax_amount = fields.Float()
     net_amount = fields.Float()
-    currency_id = fields.Many2one(
-        "res.currency", default=lambda self: self.env.company.currency_id
-    )
+    # tax_type = fields.Selection()
 
     @api.model
     def _get_account_move_data(self, data=None, start_date=False, end_date=False):
@@ -22,12 +19,19 @@ class AccountOssReport(models.Model):
         if data is None:
             data = []
 
+        # Fetch the tag for "OSS" to use in the domain
+        oss_tag = self.env['account.account.tag'].search([('name', '=', 'OSS')], limit=1)
+
+        # Build the domain to filter by date, tax, and tag "OSS"
         domain = [
-            ("move_id.invoice_date", ">=", start_date),
-            ("move_id.invoice_date", "<=", end_date),
-            ("tax_line_id", "!=", False),
+            ('move_id.invoice_date', '>=', start_date),
+            ('move_id.invoice_date', '<=', end_date),
+            ('tax_ids', '!=', False),
+            ('tax_tag_ids', 'in', [oss_tag.id])
         ]
-        move_lines = self.env["account.move.line"].search(domain)
+
+        # Fetch move lines that match the criteria
+        move_lines = self.env['account.move.line'].search(domain)
 
         for line in move_lines:
             move = line.move_id
@@ -35,18 +39,22 @@ class AccountOssReport(models.Model):
             tax_amount = move.amount_tax_signed
             net_amount = move.amount_total_signed
 
-            data.append(
-                {
-                    "country_code": line.partner_id.country_id.code
-                    if line.partner_id.country_id
-                    else "Unknown",
-                    "tax_rate": line.tax_line_id.amount,
-                    "base_amount": base_amount,
-                    "tax_amount": tax_amount,
-                    "net_amount": net_amount,
-                    "currency_id": move.company_currency_id.id,
-                }
-            )
+            # Fetch the first tax's country code and tax rate if they exist
+            if line.tax_ids:
+                country_code = line.tax_ids[0].country_id.code
+                tax_rate = line.tax_ids[0].amount
+            else:
+                country_code = 'Unknown'
+                tax_rate = 0.0
+
+            data.append({
+                'country_code': country_code,
+                'tax_rate': tax_rate,
+                'base_amount': base_amount,
+                'tax_amount': tax_amount,
+                'net_amount': net_amount,
+                # 'tax_type': None,
+            })
 
         return data
 
