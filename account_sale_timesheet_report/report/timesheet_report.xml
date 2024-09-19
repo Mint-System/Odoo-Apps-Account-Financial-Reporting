@@ -86,8 +86,7 @@
                     Period: <t
                         t-esc="min_date"
                         t-options="{'widget': 'date'}"
-                    /> until <t t-esc="max_date"
-                        t-options="{'widget': 'date'}" />
+                    /> until <t t-esc="max_date" t-options="{'widget': 'date'}" />
                 </p>
 
                 <style>
