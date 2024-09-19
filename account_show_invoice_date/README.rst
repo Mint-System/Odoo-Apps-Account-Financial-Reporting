@@ -6,7 +6,7 @@
 Account Show Invoice Date
 =========================
 
-Module summary.
+Show Invoice date in Account Aged Reports.
 
 For a detailed documentation have a look at https://www.odoo-wiki.org/account-show-invoice-date.html
 

@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 class ReportAccountAgedPartner(models.AbstractModel):
     _inherit = "account.aged.partner"
-    move_invoice_date = fields.Date(string=_("Invoice Date"))
+    move_invoice_date = fields.Date(string="Invoice Date")
 
     @api.model
     def _get_sql(self):
@@ -113,14 +113,6 @@ class ReportAccountAgedPartner(models.AbstractModel):
             self.env.cr.connection.encoding
         )
 
-    # uk: this method must not be overridden
-    @api.model
-    def _get_columns_name(self, options):
-        columns = super(ReportAccountAgedPartner, self)._get_columns_name(options)
-        # Insert  new column header for Invoice Date
-        # columns.insert(1, {'name': 'Rechnungsdatum'})  # Adjust the index as needed
-        return columns
-
     @api.model
     def _get_column_details(self, options):
         columns = super(ReportAccountAgedPartner, self)._get_column_details(options)
@@ -153,57 +145,3 @@ class ReportAccountAgedPartner(models.AbstractModel):
             self._field_column("move_invoice_date")
         ]
         return columns_without_account_and_date
-
-    # uk: this method must not be overridden
-
-    # @api.model
-    # def _get_lines(self, options, line_id=None):
-    #     lines = super(ReportAccountAgedPartner, self)._get_lines(options, line_id)
-    #     # _logger.info('### LINES ###: %s', lines)
-    #     # _logger.info('OPTIONS: %s', options)
-    #     active_lines = []
-    #     for line in lines:
-    #         _logger.info('### LINE: %s', line)
-    #         invoice_date_dict = {}
-    #         id = line.get('id')
-    #         parent_id = line.get('parent_id')
-    #         #if parent_id == 'partner_id-res.partner-False':
-    #         #    continue
-
-    #         if id:
-    #          #   if id == 'partner_id-res.partner-False':
-    #          #       continue
-
-    #             if type(id) == int:
-    #                 move_line = self.env['account.move.line'].browse(line['id'])
-    #                 _logger.info("MOVE LINE MOVE ID: %s", move_line.move_id.id)
-    #                 move = self.env['account.move'].search([('id', '=', move_line.move_id.id)], limit=1)
-    #                 # import pdb; pdb.set_trace()
-    #                 if move.invoice_date:
-    #                     invoice_date_dict['name'] = datetime.strftime(move.invoice_date, '%d.%m.%Y')
-    #                     invoice_date_dict['no_format'] = move.invoice_date
-    #                 else:
-    #                     invoice_date_dict['name'] = ''
-    #                     invoice_date_dict['no_format'] = ''
-
-    #                 # _logger.info("LINE COLUMN: %s", line['columns'])
-    #                 line['columns'].insert(0, invoice_date_dict)
-    #             else:
-    #                 line['colspan'] += 1
-    #         else:
-    #             line['colspan'] += 1
-
-    #         active_lines.append(line)
-
-    #         # print("LINE", line)
-
-    #     # for line in lines:
-    #     #     move_id = line.get('move_id')
-    #     #     if move_id:
-    #     #         move = self.env['account.move'].browse(move_id)
-    #     #         line['invoice_date'] = move.invoice_date or move.date
-
-    #     #_logger.info('get lines: %s', lines)
-
-    #     # return active_lines
-    #     return lines

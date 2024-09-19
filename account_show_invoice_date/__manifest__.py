@@ -12,8 +12,5 @@
     "installable": True,
     "application": False,
     "auto_install": False,
-    "data": [
-        # "views/account_aged_partner.xml"
-    ],
     "images": ["images/screen.png"],
 }

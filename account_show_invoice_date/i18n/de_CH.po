@@ -1,0 +1,34 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_show_invoice_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-19 07:17+0000\n"
+"PO-Revision-Date: 2024-09-19 07:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_show_invoice_date
+#: code:addons/account_show_invoice_date/models/account_aged_partner_balance.py:0
+#, python-format
+msgid "Account"
+msgstr ""
+
+#. module: account_show_invoice_date
+#: model:ir.model,name:account_show_invoice_date.model_account_aged_partner
+msgid "Aged Partner Balances"
+msgstr "Partnersalden nach Fälligkeit"
+
+#. module: account_show_invoice_date
+#: model:ir.model.fields,field_description:account_show_invoice_date.field_account_aged_partner__move_invoice_date
+#: model:ir.model.fields,field_description:account_show_invoice_date.field_account_aged_payable__move_invoice_date
+#: model:ir.model.fields,field_description:account_show_invoice_date.field_account_aged_receivable__move_invoice_date
+msgid "Invoice Date"
+msgstr "Rechnungsdatum"
