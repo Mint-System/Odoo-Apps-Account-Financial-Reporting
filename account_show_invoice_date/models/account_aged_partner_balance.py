@@ -127,7 +127,6 @@ class ReportAccountAgedPartner(models.AbstractModel):
         do_not_show_columns = [
             self._field_column("expected_pay_date"),
             self._field_column("account_name"),
-            self._field_column("report_date"),
         ]
         do_not_show_names = [column.name for column in do_not_show_columns]
         # due to some reasons in original _get_columns_name account_name is added as Account, so we have Account Name (which we get by field account_name)
