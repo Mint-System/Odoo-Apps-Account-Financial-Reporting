@@ -19,9 +19,4 @@
         <field name="view_mode">tree</field>
     </record>
 
-    <!-- <menuitem id="menu_account_oss_report" -->
-    <!--           name="OSS Tax Report" -->
-    <!--           parent="account.menu_finance_reports" -->
-    <!--           action="action_account_oss_report"/> -->
-
 </odoo>

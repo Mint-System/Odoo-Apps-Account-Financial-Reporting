@@ -6,12 +6,6 @@
               parent="account.menu_finance_reports"
               sequence="100"/>
 
-    <menuitem id="menu_oss_report_recalculate_wizard"
-              name="Recalculate OSS Report"
-              parent="menu_oss_tax_reporting"
-              action="account_oss_report.action_recalculate_oss_report"
-              sequence="200"/>
-
     <menuitem id="menu_account_oss_report"
               name="OSS Tax Report"
               parent="menu_oss_tax_reporting"

@@ -1,3 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_account_oss_report,access_account_oss_report,model_account_oss_report,base.group_user,1,1,1,1
-access_oss_report_recalculate,access_oss_report_recalculate,model_oss_report_recalculate,base.group_user,1,1,1,1

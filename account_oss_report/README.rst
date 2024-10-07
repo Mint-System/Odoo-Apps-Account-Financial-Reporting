@@ -3,10 +3,10 @@
     :alt: License: GPL-3
 
 ==================
-Account Oss Report
+Account OSS Report
 ==================
 
-Module summary.
+Create OSS tax report for CH.
 
 For a detailed documentation have a look at https://www.odoo-wiki.org/account-oss-report.html
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="account_tag_oss" model="account.account.tag">
+        <field name="name">OSS</field>
+    </record>
+
+</odoo>
