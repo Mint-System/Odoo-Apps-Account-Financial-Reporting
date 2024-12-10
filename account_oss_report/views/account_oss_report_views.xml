@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_oss_report_list_view" model="ir.ui.view">
+        <field name="name">account_oss_report.account_oss_report_list_view</field>
+        <field name="model">account.oss.report</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <header>
+                    <button
+                        name="refresh_report"
+                        string="Refresh Report"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                </header>
+                <field name="country_code" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_oss_report_action" model="ir.actions.act_window">
+        <field name="name">Account OSS Report</field>
+        <field name="res_model">account.oss.report</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="account_oss_report_menu" action="account_oss_report_action" name="Account OSS Report" sequence="10" parent="account.account_reports_management_menu"/>
+
+</odoo>
