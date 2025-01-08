@@ -1,0 +1,10 @@
+- Install `l10n_ch_reports`
+- Switch to "CH Company"
+- In the account settings click "Refresh tax mappings"
+- For account tag "+221" change external id to "__custom__.l10n_ch_tag_plus_220"
+- Import the file "OSS-acccount.tax.csv"
+- Create an invoice for a partner with country "Sweden"
+- Add a product and apply the tax "25.0% SE VAT"
+- Copy the invoice twice
+- In the last invoice change partner with country "Estland"
+- set tax to "22.0% EE VAT (inkl.)"

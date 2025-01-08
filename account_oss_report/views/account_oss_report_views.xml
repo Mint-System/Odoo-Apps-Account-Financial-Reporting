@@ -13,8 +13,18 @@
                         type="object"
                         class="oe_highlight"
                     />
+                    <button
+                        name="download_report"
+                        string="Download Report"
+                        type="object"
+                        class="oe_highlight"
+                    />
                 </header>
                 <field name="country_code" />
+                <field name="tax_type" />
+                <field name="tax_rate" />
+                <field name="base_amount" />
+                <field name="tax_amount" />
             </tree>
         </field>
     </record>
