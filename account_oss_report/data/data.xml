@@ -11,13 +11,8 @@
             ref('base.es'),ref('base.se'),ref('base.ch')])]"/>
     </record>
 
-    <record id="init" model="account.oss.report">
-        <field name="tax_type">standard</field>
-        <field name="country_code">SE</field>
-        <field name="tax_rate">25.00</field>
-        <field name="base_amount">100.00</field>
-        <field name="tax_amount">25.00</field>
-        <field name="currency_id" ref="base.EUR" />
+    <record id="account_oss_report" model="ir.attachment">
+        <field name="name">OSS Report.csv</field>
     </record>
 
 </odoo>

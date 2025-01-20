@@ -10,7 +10,6 @@
     "license": "AGPL-3",
     "depends": ["l10n_eu_oss"],
     "data": [
-        "security/ir.model.access.csv",
         "data/data.xml",
         "views/account_oss_report_views.xml",
     ],
