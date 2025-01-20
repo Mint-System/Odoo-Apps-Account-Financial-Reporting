@@ -1,7 +1,7 @@
-import logging
 import base64
+import logging
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -29,7 +29,13 @@ class AccountMoveLine(models.Model):
 
         account_move_line_ids = self.read_group(
             domain=[("id", "in", self.ids)],
-            fields=["tax_ids", "tax_base_amount", "credit", "country_id", "currency_id"],
+            fields=[
+                "tax_ids",
+                "tax_base_amount",
+                "credit",
+                "country_id",
+                "currency_id",
+            ],
             groupby=["country_id"],
         )
 
@@ -39,7 +45,7 @@ class AccountMoveLine(models.Model):
 Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbetrag
 """
         currenty_eur = self.env.ref("base.EUR")
-        
+
         for group_line in account_move_line_ids:
             domain = group_line.get("__domain") or domain
             rec = self.search(domain, limit=1)
@@ -49,8 +55,12 @@ Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbet
             tax_rate = rec.tax_line_id.amount
 
             # Convert to EUR
-            base_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(group_line['tax_base_amount'], currenty_eur)
-            tax_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(group_line['credit'], currenty_eur)
+            base_amount = rec.currency_id.with_context(
+                date=fields.Date.today()
+            ).compute(group_line["tax_base_amount"], currenty_eur)
+            tax_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(
+                group_line["credit"], currenty_eur
+            )
 
             # Format
             tax_rate = f"{tax_rate:.2f}"
@@ -59,12 +69,9 @@ Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbet
 
             csv += f"{country_code},{tax_type},{tax_rate},{base_amount},{tax_amount}\n"
 
-
         # Write the file
         attachment = self.env.ref("account_oss_report.account_oss_report")
-        attachment.write({
-            "datas": base64.b64encode(csv.encode())
-        })
+        attachment.write({"datas": base64.b64encode(csv.encode())})
 
         return {
             "type": "ir.actions.act_url",
