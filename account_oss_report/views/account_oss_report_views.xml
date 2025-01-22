@@ -7,7 +7,7 @@
         <field name="model">account.move.line</field>
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='analytic_accounts']" position="after">
-                <filter string="OSS Tax Lines" name="default_search_oss_tax_lines" domain="[('account_id', '=', '2202'),('tax_line_id', '!=', False),('parent_state','=','posted')]" />
+                <filter string="OSS Tax Lines" name="oss_tax_lines" domain="[('account_id', '=', '2202'),('tax_line_id', '!=', False),('parent_state','=','posted')]" />
             </xpath>
         </field>
     </record>
@@ -16,7 +16,7 @@
         <field name="name">Account OSS Report</field>
         <field name="res_model">account.move.line</field>
         <field name="view_mode">tree</field>
-        <field name="context">{'default_search_oss_tax_lines': True}</field>
+        <field name="context">{'search_default_oss_tax_lines': True}</field>
         <field name="search_view_id" ref="view_account_move_line_filter_search"/>
     </record>
 

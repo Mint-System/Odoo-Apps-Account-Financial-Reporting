@@ -39,8 +39,7 @@ class AccountMoveLine(models.Model):
             groupby=["country_id"],
         )
 
-        csv = """
-#v1.0
+        csv = """#v1.0
 #ve1.1.0
 Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbetrag
 """
