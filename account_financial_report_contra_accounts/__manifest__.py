@@ -3,7 +3,7 @@
     "summary": """
         Provide contra accounts field to the OCA general ledger report.
     """,
-    "author": "Mint System GmbH, Odoo Community Association (OCA)",
+    "author": "Mint System GmbH",
     "website": "https://www.mint-system.ch",
     "category": "Accounting",
     "version": "15.0.1.0.0",
