@@ -9,9 +9,9 @@ Setup taxes:
 
 Create invoices:
 
-- Create an invoice for a partner "Sweden" with country "Sweden"
+- Create an invoice for a partner "Sweden"
 - Add a product and apply the tax "25.0% SE VAT"
-- Copy the invoice twice
+- Confirm and copy the invoice twice
 - In the last invoice change partner with country "Estonia"
 - set tax to "22.0% EE VAT (inkl.)"
 
@@ -19,3 +19,4 @@ Generate report:
 
 - Open the "Account OSS Report" menu
 - Mark all entries and select "Action > Download OSS Report"
+- Check if CHF is in EUR

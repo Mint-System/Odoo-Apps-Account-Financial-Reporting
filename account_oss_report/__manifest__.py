@@ -17,4 +17,5 @@
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
+    "demo": ["demo/res_partner_demo.xml"],
 }

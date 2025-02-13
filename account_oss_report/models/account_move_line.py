@@ -18,12 +18,20 @@ class AccountMoveLine(models.Model):
         Returns a csv file in the following format:
 
         ```
-        #v1.0
-        #ve1.1.0
-        Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,'Steuerbemessungsgrundlage, Nettobetrag',Umsatzsteuerbetrag
-        AT,STANDARD,20.00,200.00,40.00
-        BE,STANDARD,21.00,200.00,42.00
-        BG,STANDARD,20.00,200.00,40.00
+        #v2.0
+        #ve2.2.1
+        1,AT
+        1,BE
+        1,BG
+        2,AT,STANDARD,20.00,200.00,40.00
+        2,AT,REDUCED,10.00,300.00,30.00
+        2,BE,STANDARD,21.00,200.00,42.00
+        2,BE,REDUCED,6.00,200.00,12.00
+        2,BG,STANDARD,20.00,200.00,40.00
+        3,AT,2021,7,100.00,23.00
+        3,AT,2021,8,100.00,22.00
+        3,BE,2021,7,100.00,21.00
+        3,BG,2021,7,100.00,20.00
         ```
         """
 
@@ -39,16 +47,24 @@ class AccountMoveLine(models.Model):
             groupby=["country_id"],
         )
 
-        csv = """#v1.0
-#ve1.1.0
-Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbetrag
+        csv = """#v2.0
+#ve2.2.1
 """
-        currenty_eur = self.env.ref("base.EUR")
+        # Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,"Steuerbemessungsgrundlage, Nettobetrag",Umsatzsteuerbetrag,Importmeldung
 
+        # List countries
+        for country_id in list(set(self.country_id)):
+            rate_type = 1
+            country_code = country_id.code
+            csv += f"{rate_type},{country_code}\n"
+
+        # List revenvue by country
+        currency_eur = self.env.ref("base.EUR")
         for group_line in account_move_line_ids:
             domain = group_line.get("__domain") or domain
             rec = self.search(domain, limit=1)
 
+            rate_type = 2
             country_code = rec.country_id.code
             tax_type = "STANDARD"
             tax_rate = rec.tax_line_id.amount
@@ -56,9 +72,9 @@ Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbet
             # Convert to EUR
             base_amount = rec.currency_id.with_context(
                 date=fields.Date.today()
-            ).compute(group_line["tax_base_amount"], currenty_eur)
+            ).compute(group_line["tax_base_amount"], currency_eur)
             tax_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(
-                group_line["credit"], currenty_eur
+                group_line["credit"], currency_eur
             )
 
             # Format
@@ -66,7 +82,7 @@ Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,Nettobetrag,Umsatzsteuerbet
             base_amount = f"{base_amount:.2f}"
             tax_amount = f"{tax_amount:.2f}"
 
-            csv += f"{country_code},{tax_type},{tax_rate},{base_amount},{tax_amount}\n"
+            csv += f"{rate_type},{country_code},{tax_type},{tax_rate},{base_amount},{tax_amount}\n"
 
         # Write the file
         attachment = self.env.ref("account_oss_report.account_oss_report")
