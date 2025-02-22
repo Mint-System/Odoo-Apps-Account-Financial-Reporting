@@ -11,7 +11,9 @@ class AccountGeneralLedger(models.AbstractModel):
     @api.model
     def _get_columns_name(self, options):
         columns_names = super()._get_columns_name(options)
-        columns_names.insert(3, {"name": _("Contra Accounts")})
+        columns_names.insert(1, {"name": _("Account Code")})
+        columns_names.insert(4, {"name": _("Contra Accounts")})
+        columns_names.insert(5, {"name": _("VAT Code")})
         return columns_names
 
     def _get_query_amls_select_clause(self):
@@ -39,8 +41,15 @@ class AccountGeneralLedger(models.AbstractModel):
             account.name                            AS account_name,
             journal.code                            AS journal_code,
             journal.name                            AS journal_name,
-            full_rec.name                           AS full_rec_name
+            full_rec.name                           AS full_rec_name,
+            (
+            SELECT STRING_AGG(tax.description, ', ')
+            FROM account_move_line_account_tax_rel aml_tax
+            LEFT JOIN account_tax tax ON tax.id = aml_tax.account_tax_id
+            WHERE aml_tax.account_move_line_id = account_move_line.id
+            ) AS vat_code
         """
+
 
     @api.model
     def _get_account_title_line(
@@ -49,7 +58,7 @@ class AccountGeneralLedger(models.AbstractModel):
         res = super()._get_account_title_line(
             options, account, amount_currency, debit, credit, balance, has_lines
         )
-        res["colspan"] = 5
+        res["colspan"] = 7
         return res
 
     @api.model
@@ -59,7 +68,7 @@ class AccountGeneralLedger(models.AbstractModel):
         res = super()._get_initial_balance_line(
             options, account, amount_currency, debit, credit, balance
         )
-        res["colspan"] = 5
+        res["colspan"] = 7
         return res
 
     @api.model
@@ -70,14 +79,22 @@ class AccountGeneralLedger(models.AbstractModel):
             caret_type = "account.move"
 
         columns = [
+            {
+                "name": aml["account_code"],
+                "class": "o_account_move_line_account_code",
+            },
             {"name": self.format_report_date(aml["date"]), "class": "date"},
             {
                 "name": self._format_aml_name(aml["name"], aml["ref"]),
                 "class": "o_account_report_line_ellipsis",
             },
             {
-                "name": aml["contra_accounts"],
+                "name": aml["contra_accounts"].split(", ")[0] if aml["contra_accounts"] else "",
                 "class": "o_account_move_line_contra_accounts",
+            },
+            {
+                "name": aml["vat_code"] if aml["vat_code"] else "",
+                "class": "o_account_move_line_vat_code",
             },
             {"name": aml["partner_name"], "class": "o_account_report_line_ellipsis"},
             {
@@ -99,7 +116,7 @@ class AccountGeneralLedger(models.AbstractModel):
             else:
                 currency = False
             columns.insert(
-                4,
+                6,
                 {
                     "name": currency
                     and aml["amount_currency"]
@@ -126,11 +143,11 @@ class AccountGeneralLedger(models.AbstractModel):
         res = super()._get_account_total_line(
             options, account, amount_currency, debit, credit, balance
         )
-        res["colspan"] = 5
+        res["colspan"] = 7
         return res
 
     @api.model
     def _get_total_line(self, options, debit, credit, balance):
         res = super()._get_total_line(options, debit, credit, balance)
-        res["colspan"] = self.user_has_groups("base.group_multi_currency") and 6 or 5
+        res["colspan"] = self.user_has_groups("base.group_multi_currency") and 8 or 7
         return res
