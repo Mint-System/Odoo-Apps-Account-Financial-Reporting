@@ -9,14 +9,19 @@ Setup taxes:
 
 Create invoices:
 
-- Create an invoice for a partner "Sweden"
-- Add a product and apply the tax "25.0% SE VAT"
-- Confirm and copy the invoice twice
-- In the last invoice change partner with country "Estonia"
-- set tax to "22.0% EE VAT (inkl.)"
+- Create an invoice for partner "Sweden"
+- Add a product with price 100 CHF and apply the tax "25.0% SE VAT"
+- Confirm and copy the invoice
+- Change product price to 150
+- Copy the invoice again
+- Change partner to "Estonia"
+- Set tax to "22.0% EE VAT (inkl.)"
 
 Generate report:
 
 - Open the "Account OSS Report" menu
 - Mark all entries and select "Action > Download OSS Report"
-- Check if CHF is in EUR
+- Check calculation is correct:
+
+SE: (100+150)*1.0445 and (100+150)*1.0445*0.25
+EE: (150-150*0.22/(1+0.22))*1.0445 and (150-150*0.22/(1+0.22))*1.0445*0.22

@@ -18,8 +18,8 @@ class AccountMoveLine(models.Model):
         Returns a csv file in the following format:
 
         ```
-        #v2.0
-        #ve2.2.1
+        #v3.0
+        #ve3.3.0
         1,AT
         1,BE
         1,BG
@@ -47,8 +47,8 @@ class AccountMoveLine(models.Model):
             groupby=["country_id"],
         )
 
-        csv = """#v2.0
-#ve2.2.1
+        csv = """#v3.0
+#ve3.3.0
 """
         # Land des Verbrauchs,Umsatzsteuertyp,Umsatzsteuersatz,"Steuerbemessungsgrundlage, Nettobetrag",Umsatzsteuerbetrag,Importmeldung
 
