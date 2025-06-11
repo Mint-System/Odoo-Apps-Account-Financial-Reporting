@@ -29,5 +29,6 @@ class AccountGeneralLedger(models.AbstractModel):
                 + "account_move_line.contra_accounts,\n"
                 + full_query[insert_index:]
             )
+            _logger.warning("### query_with_contra_accounts: %s ###" % query_with_contra_accounts)
             return (query_with_contra_accounts, all_params)
         return result

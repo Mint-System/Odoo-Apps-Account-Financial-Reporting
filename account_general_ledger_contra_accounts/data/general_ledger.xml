@@ -12,7 +12,7 @@
             <record id="general_ledger_report_contra_accounts" model="account.report.column">
                 <field name="name">Contra Accounts</field>
                 <field name="expression_label">contra_accounts</field>
-                <field name="figure_type">none</field>
+                <field name="figure_type">string</field>
                 <field name="sequence">14</field>
                 <field name="blank_if_zero" eval="True"/>
             </record>
