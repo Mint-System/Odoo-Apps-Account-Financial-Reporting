@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_reports.general_ledger_report" model="account.report">
+        <field name="column_ids">
+            <record id="account_reports.general_ledger_report_date" model="account.report.column">
+                <field name="sequence">10</field>
+            </record>
+            <record id="account_reports.general_ledger_report_communication" model="account.report.column">
+                <field name="sequence">12</field>
+            </record>
+            <record id="general_ledger_report_contra_accounts" model="account.report.column">
+                <field name="name">Contra Accounts</field>
+                <field name="expression_label">contra_accounts</field>
+                <field name="figure_type">none</field>
+                <field name="sequence">14</field>
+                <field name="blank_if_zero" eval="True"/>
+            </record>
+            <record id="account_reports.general_ledger_report_partner_name" model="account.report.column">
+                <field name="sequence">16</field>
+            </record>
+            <record id="account_reports.general_ledger_report_amount_currency" model="account.report.column">
+                <field name="sequence">18</field>
+            </record>
+            <record id="account_reports.general_ledger_report_debit" model="account.report.column">
+                <field name="sequence">20</field>
+            </record>
+            <record id="account_reports.general_ledger_report_credit" model="account.report.column">
+                <field name="sequence">22</field>
+            </record>
+            <record id="account_reports.general_ledger_report_balance" model="account.report.column">
+                <field name="sequence">24</field>
+            </record>
+
+        </field>
+
+    </record>
+</odoo>
