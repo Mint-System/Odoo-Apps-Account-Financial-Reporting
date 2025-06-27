@@ -7,4 +7,3 @@ Check appearance of contra accounts:
 
 - Go to Accounting > Reporting > General Ledger.
 - Check if column with contra accounts is shown.
-

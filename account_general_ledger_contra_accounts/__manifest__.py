@@ -4,7 +4,7 @@
         Add contra accounts to general ledger.
     """,
     "author": "Mint System GmbH",
-    "website": "https://www.mint-system.ch",
+    "website": "https://www.mint-system.ch/",
     "category": "Accounting",
     "version": "17.0.1.0.0",
     "license": "OPL-1",
