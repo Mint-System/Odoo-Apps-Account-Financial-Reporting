@@ -25,5 +25,7 @@ class AccountGeneralLedger(models.AbstractModel):
             else:
                 query_with_contra_accounts = full_query
 
+            _logger.info("Query with Contra Accounts: %s", query_with_contra_accounts)
+
             return (query_with_contra_accounts, all_params)
         return result
