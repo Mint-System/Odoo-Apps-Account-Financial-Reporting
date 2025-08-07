@@ -17,9 +17,13 @@ class AccountGeneralLedger(models.AbstractModel):
         full_query = result[0]
         all_params = result[1]
         if full_query:
-            insert_index = full_query.find("account_move_line.ref,") + len("account_move_line.ref,")
-            query_with_contra_accounts = (
-                full_query[:insert_index] + "account_move_line.contra_accounts,\n" + full_query[insert_index:]
-            )
+            account_move_line_ref = "account_move_line.ref,"
+            if full_query.find(account_move_line_ref) != -1:
+                query_with_contra_accounts = full_query.replace(
+                    account_move_line_ref, "account_move_line.contra_accounts,\n" + account_move_line_ref
+                )
+            else:
+                query_with_contra_accounts = full_query
+
             return (query_with_contra_accounts, all_params)
         return result
