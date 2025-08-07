@@ -16,6 +16,7 @@ class AccountGeneralLedger(models.AbstractModel):
         result = super()._get_query_amls(report, options, expanded_account_ids, offset, limit)
         full_query = result[0]
         all_params = result[1]
+        _logger.warning("Full Query: %s", full_query)
         if full_query:
             account_move_line_ref = "account_move_line.ref,"
             if full_query.find(account_move_line_ref) != -1:
