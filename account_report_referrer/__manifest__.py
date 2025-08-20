@@ -2,7 +2,7 @@
 {
     "name": "Account Report Referrer",
     "summary": """
-        Module summary.
+        Add referrer to report.
     """,
     "author": "Mint System GmbH",
     "website": "https://www.mint-system.ch",
@@ -10,18 +10,9 @@
     "version": "16.0.1.0.0",
     "license": "OPL-1",
     "depends": ["account", "partner_commission"],
-    "data": [
-        "security/security.xml",
-        "security/ir.model.access.csv",
-    ],
+    "data": ["report/account_invoice_report_view.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,
     "images": ["images/screen.png"],
-    "demo": ["demo/demo.xml"],
-    "assets": {
-        "web.assets_backend": [
-            "account_report_referrer/static/src/css/style.css",
-        ]
-    },
 }
