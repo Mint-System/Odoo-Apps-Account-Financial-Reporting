@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_account_move_line_filter_search" model="ir.ui.view">
+        <field name="inherit_id" ref="account.view_account_move_line_filter" />
+        <field
+            name="name"
+        >account_oss_report.view_account_move_line_filter_search</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='analytic_accounts']" position="after">
+                <filter
+                    string="OSS Tax Lines"
+                    name="oss_tax_lines"
+                    domain="[('account_id', '=', '2202'),('tax_line_id', '!=', False),('parent_state','=','posted')]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_oss_report_action" model="ir.actions.act_window">
+        <field name="name">Account OSS Report</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_oss_tax_lines': True}</field>
+        <field name="search_view_id" ref="view_account_move_line_filter_search" />
+    </record>
+
+    <menuitem
+        id="account_oss_report_menu"
+        action="account_oss_report_action"
+        name="Account OSS Report"
+        sequence="10"
+        parent="account.account_reports_management_menu"
+    />
+
+    <record id="model_res_country_download_oss_report" model="ir.actions.server">
+        <field name="name">Download OSS Report</field>
+        <field name="model_id" ref="account.model_account_move_line" />
+        <field name="binding_model_id" ref="account.model_account_move_line" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.download_oss_report()</field>
+    </record>
+</odoo>
