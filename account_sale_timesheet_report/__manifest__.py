@@ -1,0 +1,22 @@
+{
+    "name": "Account Sale Timesheet Report",
+    "summary": """
+        Timesheet report for invoicing.
+    """,
+    "author": "Mint System GmbH",
+    "website": "https://www.mint-system.ch/",
+    "category": "Accounting",
+    "version": "17.0.2.0.1",
+    "license": "AGPL-3",
+    "depends": ["sale_timesheet"],
+    "data": [
+        "report/timesheet_report.xml",
+        "report/report_invoice.xml",
+        "report/report_sale.xml",
+        "views/account_report.xml",
+    ],
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+    "images": ["images/screen.png"],
+}
