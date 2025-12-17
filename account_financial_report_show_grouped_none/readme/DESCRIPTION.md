@@ -1,0 +1,1 @@
+Show move lines if grouped by none is selected.
