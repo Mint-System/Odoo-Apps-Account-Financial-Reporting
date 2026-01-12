@@ -47,12 +47,12 @@ class AccountMoveLine(models.Model):
         account_move_line_ids = self._read_group(
             domain=[("id", "in", self.ids)],
             groupby=["country_id"],
-            aggregates=["tax_base_amount:sum", "credit:sum"],
+            aggregates=["tax_base_amount:sum", "credit:sum", "debit:sum"],
         )
 
         for group_line in account_move_line_ids:
-            # group_line is a tuple: (country_id_value, tax_base_amount_sum, credit_sum)
-            country_recordset, tax_base_amount_sum, credit_sum = group_line
+            # group_line is a tuple: (country_id_value, tax_base_amount_sum, credit_sum, debit_sum)
+            country_recordset, tax_base_amount_sum, credit_sum, debit_sum = group_line
 
             if not country_recordset:
                 continue
@@ -65,12 +65,13 @@ class AccountMoveLine(models.Model):
             tax_type = "STANDARD"
             tax_rate = rec.tax_line_id.amount if rec.tax_line_id else 0.0
 
-            # Convert to EUR using _convert method
+            # Convert to EUR using the _convert method
             company = rec.company_id or self.env.company
             conversion_date = fields.Date.today()
-
             base_amount = rec.currency_id._convert(tax_base_amount_sum, currency_eur, company, conversion_date)
-            tax_amount = rec.currency_id._convert(credit_sum, currency_eur, company, conversion_date)
+            credit_amount = rec.currency_id._convert(credit_sum, currency_eur, company, conversion_date)
+            debit_amount = rec.currency_id._convert(debit_sum, currency_eur, company, conversion_date)
+            base_amount = credit_amount - debit_amount
 
             # Format
             tax_rate = f"{tax_rate:.2f}"
