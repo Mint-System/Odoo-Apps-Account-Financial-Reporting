@@ -25,3 +25,11 @@ Generate report:
 
 SE: (100+150)*1.0445 and (100+150)*1.0445*0.25
 EE: (150-150*0.22/(1+0.22))*1.0445 and (150-150*0.22/(1+0.22))*1.0445*0.22
+
+Generate credit:
+
+- Create credit for "Estoania"
+- Add product with price 50 CHF
+- Confirm the credit
+- Generate the OSS report
+- Ensure that the

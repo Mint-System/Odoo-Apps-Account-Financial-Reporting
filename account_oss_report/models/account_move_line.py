@@ -39,8 +39,8 @@ class AccountMoveLine(models.Model):
             domain=[("id", "in", self.ids)],
             fields=[
                 "tax_ids",
-                "tax_base_amount",
                 "credit",
+                "debit",
                 "country_id",
                 "currency_id",
             ],
@@ -68,20 +68,26 @@ class AccountMoveLine(models.Model):
             country_code = rec.country_id.code
             tax_type = "STANDARD"
             tax_rate = rec.tax_line_id.amount
+            credit = group_line["credit"]
+            debit = group_line["debit"]
+            # _logger.warning([tax_rate, credit, debit])
+
+            # Convert to base amount
+            base_amount = credit / (tax_rate / 100) - debit / (tax_rate / 100)
+            tax_amount = credit - debit
 
             # Convert to EUR
             base_amount = rec.currency_id.with_context(
                 date=fields.Date.today()
-            ).compute(group_line["tax_base_amount"], currency_eur)
+            ).compute(base_amount, currency_eur)
             tax_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(
-                group_line["credit"], currency_eur
+                tax_amount, currency_eur
             )
 
             # Format
             tax_rate = f"{tax_rate:.2f}"
             base_amount = f"{base_amount:.2f}"
             tax_amount = f"{tax_amount:.2f}"
-
             csv += f"{rate_type},{country_code},{tax_type},{tax_rate},{base_amount},{tax_amount}\n"
 
         # Write the file
