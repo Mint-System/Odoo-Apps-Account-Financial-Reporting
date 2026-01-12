@@ -24,3 +24,11 @@ Generate report:
 
 SE: 250*1.0445=261.125 and 250*1.0445*0.25=65.28125
 EE: 150*1.0445=156.675  and 150*1.0445*0.24=37.602
+
+Generate credit:
+
+- Create credit for "Estoania"
+- Add product with price 50 CHF and apply the tax "24.0% EE USt-IdNr."
+- Confirm the credit
+- Generate the OSS report
+- Ensure that the amount is deducted.
