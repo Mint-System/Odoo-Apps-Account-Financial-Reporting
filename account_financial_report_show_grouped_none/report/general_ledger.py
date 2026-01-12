@@ -8,9 +8,7 @@ _logger = logging.getLogger(__name__)
 class GeneralLedgerReport(models.AbstractModel):
     _inherit = "report.account_financial_report.general_ledger"
 
-    def _create_account_not_show_item(
-        self, account, acc_id, gen_led_data, rec_after_date_to_ids, grouped_by
-    ):
+    def _create_account_not_show_item(self, account, acc_id, gen_led_data, rec_after_date_to_ids, grouped_by):
         move_lines = []
         for prt_id in gen_led_data[acc_id].keys():
             if not isinstance(prt_id, int):

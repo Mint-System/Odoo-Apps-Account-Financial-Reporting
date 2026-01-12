@@ -1,7 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <data>
-        <template id="report_general_ledger_lines_inherit" inherit_id="account_financial_report.report_general_ledger_lines" priority="50">
+        <template
+            id="report_general_ledger_lines_inherit"
+            inherit_id="account_financial_report.report_general_ledger_lines"
+            priority="50"
+        >
             <xpath expr="//div[div='Account']/div[4]" position="replace">
                 <div class="act_as_cell" style="width: 8%">Contra Account</div>
             </xpath>
@@ -10,8 +14,12 @@
                 <div class="act_as_row lines">
                     <div class="act_as_cell left">
                         <span>
-                            <span t-att-res-id="line['contra_accounts']" res-model="account.move.line" view-type="form">
-                                <t t-raw="line['contra_accounts']"/>
+                            <span
+                                t-att-res-id="line['contra_accounts']"
+                                res-model="account.move.line"
+                                view-type="form"
+                            >
+                                <t t-raw="line['contra_accounts']" />
                             </span>
                         </span>
                     </div>

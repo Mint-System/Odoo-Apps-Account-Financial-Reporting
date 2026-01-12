@@ -8,9 +8,7 @@ _logger = logging.getLogger(__name__)
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    contra_accounts = fields.Char(
-        compute="_compute_contra_accounts", readonly=True, store=True
-    )
+    contra_accounts = fields.Char(compute="_compute_contra_accounts", readonly=True, store=True)
 
     @api.depends("move_id.line_ids")
     def _compute_contra_accounts(self):

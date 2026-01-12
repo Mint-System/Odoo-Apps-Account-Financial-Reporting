@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="res_partner_oss_sweden" model="res.partner">
         <field name="name">Sweden</field>
         <field name="is_company">1</field>
-        <field name="country_id" ref="base.se"/>
+        <field name="country_id" ref="base.se" />
     </record>
     <record id="res_partner_oss_estonia" model="res.partner">
         <field name="name">Estonia</field>
         <field name="is_company">1</field>
-        <field name="country_id" ref="base.ee"/>
+        <field name="country_id" ref="base.ee" />
     </record>
 </odoo>

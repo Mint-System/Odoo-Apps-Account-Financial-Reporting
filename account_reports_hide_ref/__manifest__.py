@@ -4,7 +4,7 @@
         Hide journal post ref in general ledger report.
     """,
     "author": "Mint System GmbH",
-    "website": "https://www.mint-system.ch",
+    "website": "https://www.mint-system.ch/",
     "category": "Accounting,",
     "version": "16.0.1.0.0",
     "license": "OPL-1",

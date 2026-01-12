@@ -9,9 +9,7 @@ _logger = logging.getLogger(__name__)
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    country_id = fields.Many2one(
-        "res.country", related="partner_id.country_id", store=True
-    )
+    country_id = fields.Many2one("res.country", related="partner_id.country_id", store=True)
 
     def download_oss_report(self):
         """
@@ -77,12 +75,8 @@ class AccountMoveLine(models.Model):
             tax_amount = credit - debit
 
             # Convert to EUR
-            base_amount = rec.currency_id.with_context(
-                date=fields.Date.today()
-            ).compute(base_amount, currency_eur)
-            tax_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(
-                tax_amount, currency_eur
-            )
+            base_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(base_amount, currency_eur)
+            tax_amount = rec.currency_id.with_context(date=fields.Date.today()).compute(tax_amount, currency_eur)
 
             # Format
             tax_rate = f"{tax_rate:.2f}"
