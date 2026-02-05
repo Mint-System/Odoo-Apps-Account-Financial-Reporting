@@ -109,7 +109,7 @@
                             <th id="task_id" t-if="show_task">
                                 <span>Task</span>
                             </th>
-                            <th id="unit_amount" class="text-right">
+                            <th id="unit_amount" class="text-end">
                                 <span t-if="is_uom_day"><span
                                         style="white-space: nowrap;"
                                     >Time Spent</span> (Days)</span>
@@ -161,7 +161,7 @@
                             <t t-if="show_task" t-set="nbCols" t-value="nbCols + 1" />
                             <td
                                 id="line_sum_amount"
-                                class="text-right"
+                                class="text-end"
                                 t-attf-colspan="{{nbCols}}"
                             >
                                 <strong t-if="is_uom_day">
@@ -199,13 +199,13 @@
                                 <th id="order_line">
                                     <span>Order Line</span>
                                 </th>
-                                <th id="ordered" class="text-right">
+                                <th id="ordered" class="text-end">
                                     <span>Ordered</span>
                                 </th>
-                                <th id="invoiced" class="text-right">
+                                <th id="invoiced" class="text-end">
                                     <span>Invoiced</span>
                                 </th>
-                                <th id="remaining" class="text-right">
+                                <th id="remaining" class="text-end">
                                     <span>Reamining</span>
                                 </th>
                             </tr>
@@ -215,19 +215,19 @@
                                 <td id="order_line_name">
                                     <span t-esc="order_line.name" />
                                 </td>
-                                <td id="order_line_ordered" class="text-right">
+                                <td id="order_line_ordered" class="text-end">
                                     <span
                                         t-esc="order_line.product_uom_qty"
                                         t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"
                                     />
                                 </td>
-                                <td id="order_line_invoiced" class="text-right">
+                                <td id="order_line_invoiced" class="text-end">
                                     <span
                                         t-esc="order_line.qty_invoiced"
                                         t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"
                                     />
                                 </td>
-                                <td id="order_line_remaining" class="text-right">
+                                <td id="order_line_remaining" class="text-end">
                                     <span
                                         t-esc="(order_line.product_uom_qty - order_line.qty_invoiced) if order_line.product_uom_qty != 0.0 else 0.0"
                                         t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"
@@ -268,7 +268,7 @@
                     <span t-field="line.task_id.sudo().name" />
                 </t>
             </td>
-            <td id="line_unit_amount" class="text-right">
+            <td id="line_unit_amount" class="text-end">
                 <span
                     t-if="is_uom_day"
                     t-esc="line._get_timesheet_time_day()"
@@ -281,7 +281,7 @@
                 />
             </td>
         </tr>
-        <tr class="text-right">
+        <tr class="text-end">
             <td t-if="is_uom_day" name="line_section_subtotal" colspan="99">
                 <span class="mr16 mr-2">Subtotal</span>
                 <span
