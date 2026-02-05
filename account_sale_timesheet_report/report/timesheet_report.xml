@@ -131,7 +131,7 @@
                                     t-value='timesheet_ids.filtered(lambda t: group == t.so_line)'
                                 />
                                 <t t-if="lines">
-                                    <tr class="bg-200 font-weight-bold o_line_section">
+                                    <tr class="bg-200 fw-bold o_line_section">
                                         <td colspan="99">
                                             <span id="line_group" t-esc="group.name" />
                                             <br />
