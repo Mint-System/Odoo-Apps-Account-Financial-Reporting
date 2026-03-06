@@ -196,7 +196,7 @@
                     <table class="table table-sm table-order-summary">
                         <thead>
                             <tr>
-                                <th id="order_line">
+                                <th id="order_line" class="text-start">
                                     <span>Order Line</span>
                                 </th>
                                 <th id="ordered" class="text-end">
