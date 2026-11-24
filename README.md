@@ -1,25 +1,17 @@
 # Odoo Apps: Account Financial Reporting
 
-Collection of account model related modules.
+Odoo modules extending the `account` module.
 
 ## Usage
 
-Clone module into Odoo addon directory.
+Clone this repo into the Odoo addons directory.
 
 ```bash
-git clone git@github.com:mint-system/odoo-apps-account-financial-reporting.git ./addons/account_financial_reporting
+git clone git@github.com:Mint-System/Odoo-Apps-Account-Financial-Reporting.git ./addons/account_financial_reporting
 ```
 
 ## Available modules
 
 | Module | Summary |
-| --- | --- |
-| [account_financial_report_contra_accounts](account_financial_report_contra_accounts) |         Provide contra accounts field to the OCA general ledger report. |
-| [account_financial_report_reverse_move_lines](account_financial_report_reverse_move_lines) |         Reverse the order of move lines in the OCA general ledger report. |
-| [account_followup_email_from](account_followup_email_from) |         Send followup e-mail from specific address. |
-| [account_followup_hide_communication](account_followup_hide_communication) |         Remove communication column from followup report. |
-| [account_general_ledger_contra_accounts](account_general_ledger_contra_accounts) |         Add contra accounts to general ledger. |
-| [account_journal_items_report](account_journal_items_report) |         Report journal items grouped by account. |
-| [account_move_line_contra_accounts](account_move_line_contra_accounts) |         Show contra account of journal item. |
-| [account_sale_timesheet_report](account_sale_timesheet_report) |         Timesheet report for invoicing. |
-| [account_show_invoice_date](account_show_invoice_date) |         Show Invoice date in Account Aged Reports. |
+| ------ | ------- |
+|        |         |
