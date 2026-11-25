@@ -1,8 +1,17 @@
+# Odoo Apps: Account Financial Reporting
+
+Odoo modules extending the `account` module.
+
+## Usage
+
+Clone this repo into the Odoo addons directory.
+
+```bash
+git clone git@github.com:Mint-System/Odoo-Apps-Account-Financial-Reporting.git ./addons/account_financial_reporting
+```
+
 ## Available modules
 
 | Module | Summary |
-| --- | --- |
-| [account_followup_email_from](account_followup_email_from) |         Send followup e-mail from specific address. |
-| [account_general_ledger_contra_accounts](account_general_ledger_contra_accounts) |         Add contra accounts to general ledger. |
-| [account_move_line_contra_accounts](account_move_line_contra_accounts) |         Show contra account of journal item. |
-| [account_tax_report_show_vat](account_tax_report_show_vat) |         Show Partner Vat in Tax Report. |
+| ------ | ------- |
+|        |         |
